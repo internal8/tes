@@ -1,39 +1,62 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Html-Qrcode Demo</title>
-<body>
-    <div id="qr-reader" style="width:100vh; height: 100vh;"></div>
-    <div id="qr-reader-results"></div>
-</body>
-<script src="html5-qrcode.min.js"></script>
-<script>
-    function docReady(fn) {
-        // see if DOM is already available
-        if (document.readyState === "complete"
-            || document.readyState === "interactive") {
-            // call on next available tick
-            setTimeout(fn, 1);
-        } else {
-            document.addEventListener("DOMContentLoaded", fn);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Friendly Barcode Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
         }
-    }
-
-    docReady(function () {
-        var resultContainer = document.getElementById('qr-reader-results');
-        var lastResult, countResults = 0;
-        function onScanSuccess(decodedText, decodedResult) {
-            if (decodedText !== lastResult) {
-                ++countResults;
-                lastResult = decodedText;
-                // Handle on success condition with the decoded message.
-                alert(`Scan result ${decodedText}`, decodedResult);
-            }
+        #reader {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        var html5QrcodeScanner = new Html5QrcodeScanner(
-            "qr-reader", { fps: 10, qrbox: 250 });
-        html5QrcodeScanner.render(onScanSuccess);
-    });
-</script>
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+<body>
+    <div id="reader"></div>
+    <div id="result">Scan a barcode...</div>
+
+    <script src="html5-qrcode.min.js"></script>
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            document.getElementById('result').innerText = `Barcode detected: ${decodedText}`;
+        }
+
+        function onScanFailure(error) {
+            // Optional: handle scan failure (e.g., logging)
+        }
+
+        const html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { 
+                fps: 10, 
+                qrbox: {
+                    width: 250,
+                    height: 250
+                },
+                aspectRatio: 1.0,
+                // disableFlip: false // true if you only want to scan from the rear camera
+            });
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+</body>
 </html>
