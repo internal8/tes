@@ -40,7 +40,22 @@
     <script>
         let html5QrcodeScanner;
 
-        Swal.fire({
+        // Increment and decrement functionality
+        document.getElementById('increment').addEventListener('click', () => {
+                const input = document.getElementById('jumlahProdukInput');
+                input.value = parseInt(input.value) + 1;
+        });
+
+        document.getElementById('decrement').addEventListener('click', () => {
+            const input = document.getElementById('jumlahProdukInput');
+            if (parseInt(input.value) > 0) {
+                input.value = parseInt(input.value) - 1;
+            }
+        });
+
+        function onScanSuccess(decodedText, decodedResult) {
+            html5QrcodeScanner.pause();  // Pause the scanner
+            Swal.fire({
             imageUrl: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg",
             imageHeight: 300,
             html: `
@@ -82,40 +97,15 @@
                         </div>
                     </div>
                 `,
-            showCancelButton: true,
-            confirmButtonText: '+ Tambahkan',
-            cancelButtonText: 'Batal',
-            reverseButtons: true,
-            customClass: {
-                confirmButton: "flex-1 bg-blue-600 text-white font-bold border-blue-600 py-2 px-4 rounded",
-                cancelButton: "flex-1 text-blue-600 py-2 px-4 mr-4 border border-blue-600 rounded-md"
-            },
-            buttonsStyling: false
-        }).then(() => {
-            // html5QrcodeScanner.resume();  // Resume the scanner
-        });
-
-        // Increment and decrement functionality
-        document.getElementById('increment').addEventListener('click', () => {
-                const input = document.getElementById('jumlahProdukInput');
-                input.value = parseInt(input.value) + 1;
-        });
-
-        document.getElementById('decrement').addEventListener('click', () => {
-            const input = document.getElementById('jumlahProdukInput');
-            if (parseInt(input.value) > 0) {
-                input.value = parseInt(input.value) - 1;
-            }
-        });
-
-        function onScanSuccess(decodedText, decodedResult) {
-            html5QrcodeScanner.pause();  // Pause the scanner
-            Swal.fire({
-                title: 'Barcode Detected',
-                imageUrl: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg",
-                imageWidth: 300,
-                text: `${decodedText}`,
-                confirmButtonText: 'Close'
+                showCancelButton: true,
+                confirmButtonText: '+ Tambahkan',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                customClass: {
+                    confirmButton: "flex-1 bg-blue-600 text-white font-bold border-blue-600 py-2 px-4 rounded",
+                    cancelButton: "flex-1 text-blue-600 py-2 px-4 mr-4 border border-blue-600 rounded-md"
+                },
+                buttonsStyling: false
             }).then(() => {
                 html5QrcodeScanner.resume();  // Resume the scanner
             });
