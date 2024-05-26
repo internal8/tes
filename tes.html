@@ -22,9 +22,11 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .swal2-actions{
+            margin: 1em 1.6em .3em;
+        }
     </style>
-    <!-- SweetAlert2 CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <div id="reader"></div>
@@ -36,14 +38,60 @@
         let html5QrcodeScanner;
 
         Swal.fire({
-            title: 'Indomie Goreng',
             imageUrl: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg",
-            imageWidth: 300,
-            text: `Result: aw`,
-            // icon: 'success',
-            confirmButtonText: 'Close'
+            imageHeight: 300,
+            html: `
+                    <div class="kontent max-h-36 overflow-y-auto">
+                        <div class="font-bold text-2xl mb-4">
+                            Indomie Goreng
+                        </div>
+                        <div>
+                            Rp 3.000/pcs <br> Rp 15.000/5pcs
+                            Rp 3.000/pcs <br> Rp 15.000/5pcs
+                            Rp 3.000/pcs <br> Rp 15.000/5pcs
+                            Rp 3.000/pcs <br> Rp 15.000/5pcs
+                            Rp 3.000/pcs <br> Rp 15.000/5pcs
+                            Rp 3.000/pcs <br> Rp 15.000/5pcs
+                            Rp 3.000/pcs <br> Rp 15.000/5pcs
+                        </div>
+                    </div>
+
+                    <div class="mt-6 mb-4">
+                        <div class="relative mt-2 rounded-md shadow-sm">
+                            <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                -
+                            </div>
+                            <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0">
+                            <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                +
+                            </div>
+                        </div>
+                    </div>
+                `,
+            showCancelButton: true,
+            confirmButtonText: '+ Tambahkan',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: "flex-1 bg-blue-600 text-white font-bold border-blue-600 py-2 px-4 rounded",
+                cancelButton: "flex-1 text-blue-600 py-2 px-4 mr-4 border border-blue-600 rounded-md"
+            },
+            buttonsStyling: false
         }).then(() => {
             // html5QrcodeScanner.resume();  // Resume the scanner
+        });
+
+        // Increment and decrement functionality
+        document.getElementById('increment').addEventListener('click', () => {
+                const input = document.getElementById('jumlahProdukInput');
+                input.value = parseInt(input.value) + 1;
+        });
+
+        document.getElementById('decrement').addEventListener('click', () => {
+            const input = document.getElementById('jumlahProdukInput');
+            if (parseInt(input.value) > 0) {
+                input.value = parseInt(input.value) - 1;
+            }
         });
 
         function onScanSuccess(decodedText, decodedResult) {
@@ -51,9 +99,8 @@
             Swal.fire({
                 title: 'Barcode Detected',
                 imageUrl: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg",
-                imageWidth: 500,
-                text: `Result: ${decodedText}`,
-                icon: 'success',
+                imageWidth: 300,
+                text: `${decodedText}`,
                 confirmButtonText: 'Close'
             }).then(() => {
                 html5QrcodeScanner.resume();  // Resume the scanner
