@@ -25,6 +25,9 @@
         .swal2-actions{
             margin: 1em 1.6em .3em;
         }
+        .swal2-confirm {
+            outline: none;
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -41,22 +44,33 @@
             imageUrl: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg",
             imageHeight: 300,
             html: `
-                    <div class="kontent max-h-36 overflow-y-auto">
-                        <div class="font-bold text-2xl mb-4">
+                    <div class="kontent max-h-40 overflow-y-auto">
+                        <div class="font-bold text-4xl mb-4">
                             Indomie Goreng
                         </div>
                         <div>
-                            Rp 3.000/pcs <br> Rp 15.000/5pcs
-                            Rp 3.000/pcs <br> Rp 15.000/5pcs
-                            Rp 3.000/pcs <br> Rp 15.000/5pcs
-                            Rp 3.000/pcs <br> Rp 15.000/5pcs
-                            Rp 3.000/pcs <br> Rp 15.000/5pcs
-                            Rp 3.000/pcs <br> Rp 15.000/5pcs
-                            Rp 3.000/pcs <br> Rp 15.000/5pcs
+                            1 pcs = Rp 3.000 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
+                            5 pcs = Rp 2.700 <br>
                         </div>
                     </div>
 
-                    <div class="mt-6 mb-4">
+                    <div class="mt-10 mb-4">
                         <div class="relative mt-2 rounded-md shadow-sm">
                             <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 -
@@ -116,8 +130,8 @@
                 "reader", { 
                     fps: 10, 
                     qrbox: {
-                        width: 250,
-                        height: 250
+                        width: 400,
+                        height: 400
                     },
                     aspectRatio: 1.0,
                     // disableFlip: false // true if you only want to scan from the rear camera
