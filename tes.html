@@ -22,41 +22,48 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        #result {
-            margin-top: 20px;
-            padding: 10px;
-            background: #f1f1f1;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
     </style>
+    <!-- SweetAlert2 CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"> -->
 </head>
 <body>
     <div id="reader"></div>
-    <div id="result">Scan a barcode...</div>
 
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="html5-qrcode.min.js"></script>
     <script>
+        let html5QrcodeScanner;
+
         function onScanSuccess(decodedText, decodedResult) {
-            document.getElementById('result').innerText = `Barcode detected: ${decodedText}`;
+            html5QrcodeScanner.pause();  // Pause the scanner
+            Swal.fire({
+                title: 'Barcode Detected',
+                text: `Result: ${decodedText}`,
+                icon: 'success',
+                confirmButtonText: 'Close'
+            }).then(() => {
+                html5QrcodeScanner.resume();  // Resume the scanner
+            });
         }
 
         function onScanFailure(error) {
             // Optional: handle scan failure (e.g., logging)
         }
 
-        const html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader", { 
-                fps: 10, 
-                qrbox: {
-                    width: 250,
-                    height: 250
-                },
-                aspectRatio: 1.0,
-                // disableFlip: false // true if you only want to scan from the rear camera
-            });
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        document.addEventListener("DOMContentLoaded", function() {
+            html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", { 
+                    fps: 10, 
+                    qrbox: {
+                        width: 250,
+                        height: 250
+                    },
+                    aspectRatio: 1.0,
+                    // disableFlip: false // true if you only want to scan from the rear camera
+                });
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        });
     </script>
 </body>
 </html>
