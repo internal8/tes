@@ -146,12 +146,12 @@
 
       <!-- tombol aksi -->
       <button class="text-white text-2xl font-bold mt-10 mb-6 bg-sky-700 py-4 mx-2 rounded-xl">Bayar</button>
-      <button class="text-white text-2xl mb-4 bg-gray-400 py-4 mx-2 rounded-xl">Batalkan</button>
+      <button class="text-white text-2xl mb-4 bg-red-700 py-4 mx-2 rounded-xl">Batalkan Semua</button>
     </div>
 
     <!-- Menu bawah layar -->
     <div class="fixed bottom-0 left-0 z-[90] right-0 flex justify-center w-full inline-flex rounded-md shadow-sm" role="group">
-      <button type="button" class="flex-row justify-center items-center px-4 py-2 bg-gray-100 border border-gray-300 hover:bg-gray-100 flex-1">
+      <!-- <button type="button" class="flex-row justify-center items-center px-4 py-2 bg-gray-100 border border-gray-300 hover:bg-gray-100 flex-1">
         <div class="w-full flex justify-center items-center">
           <svg class="fill-gray-600 text-gray-100 w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -160,7 +160,7 @@
           </svg>
         </div>
         <div class="w-full flex justify-center items-center text-xl text-gray-700 tracking-wide">Scanner</div>
-      </button>
+      </button> -->
 
       <button type="button" class="flex-row justify-center items-center px-4 py-2 bg-gray-100 border-t border-b border-gray-300 hover:bg-gray-100 flex-1">
         <div class="w-full flex justify-center items-center">
@@ -252,9 +252,10 @@
         html: `
                 <div class="kontent max-h-40 overflow-y-auto">
                     <div class="font-bold text-4xl mb-4">
-                        Indomie Goreng
+                      ${decodedText}
                     </div>
                     <div>
+                      ${decodedResult}
                         1 pcs = Rp 3.000 <br>
                         5 pcs = Rp 2.700 <br>
                         5 pcs = Rp 2.700 <br>
