@@ -1,0 +1,52 @@
+{
+  "products": [
+    {
+      "nama_barang": "Hardisk",
+      "foto_barang": {
+        "0": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/100/MTA-121516966/no-brand_no-brand_full01.jpg"
+      },
+      "deskripsi_barang": "tes Hardisk",
+      "kode_barang": "8888001250103",
+      "stok_gudang": 1,
+      "stok_etalase": 2,
+      "jumlah_terjual": 30,
+      "harga_jual": {
+        "beli_1pcs": 10000,
+        "beli_2pcs": 9500,
+        "beli_3pcs": 9000
+      }
+    },
+    {
+      "nama_barang": "Hardisk",
+      "foto_barang": {
+        "0": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/100/MTA-121516966/no-brand_no-brand_full01.jpg"
+      },
+      "deskripsi_barang": "tes Hardisk",
+      "kode_barang": "88880011250103",
+      "stok_gudang": 1,
+      "stok_etalase": 2,
+      "jumlah_terjual": 30,
+      "harga_jual": {
+        "beli_1pcs": 10000,
+        "beli_2pcs": 9500,
+        "beli_3pcs": 9000
+      }
+    },
+    {
+      "nama_barang": "Hardisk",
+      "foto_barang": {
+        "0": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/100/MTA-121516966/no-brand_no-brand_full01.jpg"
+      },
+      "deskripsi_barang": "tes Hardisk",
+      "kode_barang": "88880011250103",
+      "stok_gudang": 1,
+      "stok_etalase": 2,
+      "jumlah_terjual": 30,
+      "harga_jual": {
+        "beli_1pcs": 10000,
+        "beli_2pcs": 9500,
+        "beli_3pcs": 9000
+      }
+    }
+  ]
+}
