@@ -244,6 +244,7 @@
 
     function calculateTotalHargaBarang() {
       indexJumah = 0;
+      hargaFinal = 0;
       document.querySelectorAll("#hargaSetiapItemTablePembayaran").forEach(function (item) {
         try {
           // Mendapatkan nilai dari div hargaRegulerSetiapItemTablePembayaran
@@ -275,6 +276,7 @@
 
     function calculateTotalHargaBayar() {
       indexJumah = 0;
+      hargaBayarAkhir = 0;
       document.querySelectorAll("#hargaSetiapItemTablePembayaran").forEach(function (item) {
         try {
           // Mendapatkan nilai dari div hargaBayarSetiapItemTablePembayaran
