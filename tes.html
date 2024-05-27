@@ -1,142 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mobile Friendly Barcode Scanner</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 10px;
-            background-color: #f8f8f8;
-        }
-        #reader {
-            width: 100%;
-            /* max-width: 600px; */
-            margin: 20px auto;
-            padding: 10px;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .swal2-actions{
-            margin: 1em 1.6em .3em;
-        }
-        .swal2-confirm {
-            outline: none;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 10px;
+        background-color: #f8f8f8;
+      }
+      #reader {
+        width: 100%;
+        /* max-width: 600px; */
+        margin: 20px auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .swal2-actions {
+        margin: 1em 1.6em 0.3em;
+      }
+      .swal2-confirm {
+        outline: none;
+      }
+      .fade-out {
+        opacity: 0;
+        /* transition: opacity 0.5s ease-out; */
+      }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
+
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+  </head>
+  <body>
+    <!-- Konten scanner -->
     <div id="reader"></div>
 
-    <div class="fixed bottom-0 left-0 right-0 flex justify-center w-full">
-        <div class="bg-gray-400 shadow-lg rounded-t-md justify-center py-4 ml-[10px] mr-[10px] px-4 flex space-x-4 w-full">
-          <button class="bg-blue-500 text-white px-4 py-2 rounded-full">Custom</button>
-          <button class="bg-blue-500 text-white px-4 py-2 rounded-full">Cari</button>
-          <button class="bg-blue-500 text-white px-4 py-2 rounded-full">Keranjang</button>
+    <!-- Konten daftar belanja -->
+    <div id="konten-daftar-belanja" class="absolute inset-0 z-[100] bg-white flex flex-col pt-20">
+      <button id="close-button" class="absolute top-2 right-2 px-4 py-4">
+        <svg class="fill-gray-800 text-gray-100 w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM8.96963 8.96965C9.26252 8.67676 9.73739 8.67676 10.0303 8.96965L12 10.9393L13.9696 8.96967C14.2625 8.67678 14.7374 8.67678 15.0303 8.96967C15.3232 9.26256 15.3232 9.73744 15.0303 10.0303L13.0606 12L15.0303 13.9696C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73742 15.3232 9.26254 15.3232 8.96965 15.0303C8.67676 14.7374 8.67676 14.2625 8.96965 13.9697L10.9393 12L8.96963 10.0303C8.67673 9.73742 8.67673 9.26254 8.96963 8.96965Z"></path></g>
+        </svg>
+      </button>
+      <h1 class="text-red-700 text-4xl mb-4">Halaman Baru</h1>
+      <table id="myTable" class="display">
+        <thead>
+          <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+          </tr>
+          <tr>
+            <td>Row 2 Data 1</td>
+            <td>Row 2 Data 2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Menu bawah layar -->
+    <div class="fixed bottom-0 left-0 z-[90] right-0 flex justify-center w-full inline-flex rounded-md shadow-sm" role="group">
+      <button type="button" class="flex-row justify-center items-center px-4 py-2 bg-gray-100 border border-gray-300 hover:bg-gray-100 flex-1">
+        <div class="w-full flex justify-center items-center">
+          <svg class="fill-gray-600 text-gray-100 w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier"><path d="M4,4h6v6H4V4M20,4v6H14V4h6M14,15h2V13H14V11h2v2h2V11h2v2H18v2h2v3H18v2H16V18H13v2H11V16h3V15m2,0v3h2V15H16M4,20V14h6v6H4M6,6V8H8V6H6M16,6V8h2V6H16M6,16v2H8V16H6M4,11H6v2H4V11m5,0h4v4H11V13H9V11m2-5h2v4H11V6M2,2V6H0V2A2,2,0,0,1,2,0H6V2H2M22,0a2,2,0,0,1,2,2V6H22V2H18V0h4M2,18v4H6v2H2a2,2,0,0,1-2-2V18H2m20,4V18h2v4a2,2,0,0,1-2,2H18V22Z"></path></g>
+          </svg>
         </div>
-      </div>
+        <div class="w-full flex justify-center items-center text-xl text-gray-700 tracking-wide">Scanner</div>
+      </button>
 
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="html5-qrcode.min.js"></script>
-    <script>
-        let html5QrcodeScanner;
+      <button type="button" class="flex-row justify-center items-center px-4 py-2 bg-gray-100 border-t border-b border-gray-300 hover:bg-gray-100 flex-1">
+        <div class="w-full flex justify-center items-center">
+          <svg class="fill-gray-600 text-gray-100 w-6 h-6" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path clip-rule="evenodd" d="M12.2852 4.05704C7.74092 4.05704 4.05704 7.74092 4.05704 12.2852C4.05704 16.8295 7.74092 20.5134 12.2852 20.5134C16.8295 20.5134 20.5134 16.8295 20.5134 12.2852C20.5134 7.74092 16.8295 4.05704 12.2852 4.05704ZM2 12.2852C2 6.60485 6.60485 2 12.2852 2C17.9656 2 22.5704 6.60485 22.5704 12.2852C22.5704 17.9656 17.9656 22.5704 12.2852 22.5704C6.60485 22.5704 2 17.9656 2 12.2852Z" fill-rule="evenodd"></path>
+              <path d="M19.8786 18.3487L25.6829 24.153C26.1057 24.5758 26.1057 25.2613 25.6829 25.6841C25.2601 26.1069 24.5746 26.1069 24.1518 25.6841L18.3475 19.8798L19.8786 18.3487Z"></path>
+            </g>
+          </svg>
+        </div>
+        <div class="w-full flex justify-center items-center text-xl text-gray-700 tracking-wide">Cari</div>
+      </button>
 
-        function onScanSuccess(decodedText, decodedResult) {
-            html5QrcodeScanner.pause();  // Pause the scanner
+      <button id="menu-keranjang-belanja" type="button" class="flex-row justify-center items-center px-4 py-2 bg-gray-100 border border-gray-300 hover:bg-gray-100 flex-1">
+        <div class="w-full flex justify-center items-center">
+          <svg class="fill-gray-600 text-gray-100 w-6 h-6" version="1.1" id="XMLID_269_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g id="shop-cart">
+                <g><circle cx="9" cy="21" r="2"></circle></g>
+                <g><circle cx="19" cy="21" r="2"></circle></g>
+                <g><path d="M21,18H7.2l-4-16H0V0h4.8l0.8,3H24l-3.2,11H8.3l0.5,2H21V18z M7.8,12h11.5l2-7H6L7.8,12z"></path></g>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="w-full flex justify-center items-center text-xl text-gray-700 tracking-wide">32</div>
+      </button>
+    </div>
+  </body>
 
-            Swal.fire({
-            imageUrl: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg",
-            imageHeight: 300,
-            html: `
-                    <div class="kontent max-h-40 overflow-y-auto">
-                        <div class="font-bold text-4xl mb-4">
-                            Indomie Goreng
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="html5-qrcode.min.js"></script>
+
+  <!-- datatables -->
+  <script>
+    $(document).ready(function () {
+      $("#myTable").DataTable();
+    });
+  </script>
+
+  <!-- click event -->
+  <script>
+    document.getElementById("close-button").addEventListener("click", function () {
+      const cover = document.getElementById("konten-daftar-belanja");
+      cover.classList.add("hidden");
+      cover.classList.remove("block");
+    });
+
+    document.getElementById("menu-keranjang-belanja").addEventListener("click", function () {
+      const cover = document.getElementById("konten-daftar-belanja");
+      cover.classList.remove("hidden");
+      cover.classList.add("block");
+    });
+  </script>
+
+  <!-- scanner -->
+  <script>
+    let html5QrcodeScanner;
+
+    function onScanSuccess(decodedText, decodedResult) {
+      html5QrcodeScanner.pause(); // Pause the scanner
+
+      Swal.fire({
+        imageUrl: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg",
+        imageHeight: 300,
+        html: `
+                <div class="kontent max-h-40 overflow-y-auto">
+                    <div class="font-bold text-4xl mb-4">
+                        Indomie Goreng
+                    </div>
+                    <div>
+                        1 pcs = Rp 3.000 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                        5 pcs = Rp 2.700 <br>
+                    </div>
+                </div>
+
+                <div class="mt-10 mb-4">
+                    <div class="relative mt-2 rounded-md shadow-sm">
+                        <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            -
                         </div>
-                        <div>
-                            1 pcs = Rp 3.000 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
-                            5 pcs = Rp 2.700 <br>
+                        <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0">
+                        <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            +
                         </div>
                     </div>
+                </div>
+            `,
+        showCancelButton: true,
+        confirmButtonText: "+ Tambahkan",
+        cancelButtonText: "Batal",
+        reverseButtons: true,
+        customClass: {
+          confirmButton: "flex-1 bg-blue-600 text-white font-bold border-blue-600 py-2 px-4 rounded",
+          cancelButton: "flex-1 text-blue-600 py-2 px-4 mr-4 border border-blue-600 rounded-md",
+        },
+        buttonsStyling: false,
+      }).then(() => {
+        html5QrcodeScanner.resume(); // Resume the scanner
+      });
 
-                    <div class="mt-10 mb-4">
-                        <div class="relative mt-2 rounded-md shadow-sm">
-                            <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">
-                                -
-                            </div>
-                            <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0">
-                            <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                +
-                            </div>
-                        </div>
-                    </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: '+ Tambahkan',
-                cancelButtonText: 'Batal',
-                reverseButtons: true,
-                customClass: {
-                    confirmButton: "flex-1 bg-blue-600 text-white font-bold border-blue-600 py-2 px-4 rounded",
-                    cancelButton: "flex-1 text-blue-600 py-2 px-4 mr-4 border border-blue-600 rounded-md"
-                },
-                buttonsStyling: false
-            }).then(() => {
-                html5QrcodeScanner.resume();  // Resume the scanner
-            });
+      // Increment and decrement functionality
+      document.getElementById("increment").addEventListener("click", () => {
+        const input = document.getElementById("jumlahProdukInput");
+        input.value = parseInt(input.value) + 1;
+      });
 
-            // Increment and decrement functionality
-            document.getElementById('increment').addEventListener('click', () => {
-                    const input = document.getElementById('jumlahProdukInput');
-                    input.value = parseInt(input.value) + 1;
-            });
-
-            document.getElementById('decrement').addEventListener('click', () => {
-                const input = document.getElementById('jumlahProdukInput');
-                if (parseInt(input.value) > 0) {
-                    input.value = parseInt(input.value) - 1;
-                }
-            });
+      document.getElementById("decrement").addEventListener("click", () => {
+        const input = document.getElementById("jumlahProdukInput");
+        if (parseInt(input.value) > 0) {
+          input.value = parseInt(input.value) - 1;
         }
+      });
+    }
 
-        function onScanFailure(error) {
-            // Optional: handle scan failure (e.g., logging)
-        }
+    function onScanFailure(error) {
+      // Optional: handle scan failure (e.g., logging)
+    }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            html5QrcodeScanner = new Html5QrcodeScanner(
-                "reader", { 
-                    fps: 10, 
-                    qrbox: {
-                        width: 400,
-                        height: 400
-                    },
-                    aspectRatio: 1.0,
-                    // disableFlip: false // true if you only want to scan from the rear camera
-                });
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-        });
-    </script>
-</body>
+    document.addEventListener("DOMContentLoaded", function () {
+      html5QrcodeScanner = new Html5QrcodeScanner("reader", {
+        fps: 10,
+        qrbox: {
+          width: 400,
+          height: 400,
+        },
+        aspectRatio: 1.0,
+        // disableFlip: false // true if you only want to scan from the rear camera
+      });
+      html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    });
+  </script>
 </html>
