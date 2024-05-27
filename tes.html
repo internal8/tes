@@ -232,8 +232,10 @@
     var hargaBayarAkhir = 0;
 
     function calculateTotalBarang() {
+      indexJumah = 0;
       document.querySelectorAll("#jumlahProdukTableBelanja").forEach(function (input) {
-        jumlahBarang.push(parseInt(input.value) || 0);
+        jumlahBarang[indexJumah] = parseInt(input.value) || 0;
+        indexJumah++;
       });
 
       // Tampilkan total harga
