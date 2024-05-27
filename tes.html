@@ -32,21 +32,29 @@
         opacity: 0;
         /* transition: opacity 0.5s ease-out; */
       }
+
+      /* #myTable thead {
+        display: none;
+      } */
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.2/css/select.dataTables.css" />
 
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/select/2.0.2/js/dataTables.select.js"></script>
+    <script src="https://cdn.datatables.net/select/2.0.2/js/dataTables.select.js"></script>
   </head>
   <body>
     <!-- Konten scanner -->
     <div id="reader"></div>
 
     <!-- Konten daftar belanja -->
-    <div id="konten-daftar-belanja" class="absolute inset-0 z-[100] bg-white flex flex-col pt-20">
+    <div id="konten-daftar-belanja" class="absolute inset-0 z-[100] bg-white flex flex-col pt-20 overflow-y-auto">
       <button id="close-button" class="absolute top-2 right-2 px-4 py-4">
         <svg class="fill-gray-800 text-gray-100 w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -54,22 +62,172 @@
           <g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM8.96963 8.96965C9.26252 8.67676 9.73739 8.67676 10.0303 8.96965L12 10.9393L13.9696 8.96967C14.2625 8.67678 14.7374 8.67678 15.0303 8.96967C15.3232 9.26256 15.3232 9.73744 15.0303 10.0303L13.0606 12L15.0303 13.9696C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73742 15.3232 9.26254 15.3232 8.96965 15.0303C8.67676 14.7374 8.67676 14.2625 8.96965 13.9697L10.9393 12L8.96963 10.0303C8.67673 9.73742 8.67673 9.26254 8.96963 8.96965Z"></path></g>
         </svg>
       </button>
-      <h1 class="text-red-700 text-4xl mb-4">Halaman Baru</h1>
-      <table id="myTable" class="display">
+      <h1 class="text-red-700 text-4xl mb-4">Daftar Belanja</h1>
+      <table id="myTable" class="display nowrap w-full bg-white">
         <thead>
           <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
+            <th></th>
+            <th>Foto</th>
+            <th>Deskripsi</th>
+            <th>Jumlah</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
+            <td></td>
+            <td>
+              <div class="w-[100px]">
+                <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
+              </div>
+            </td>
+            <td>
+              <div class="class=flex flex-col">
+                <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 1 pcs</div>
+                <div class="flex flex-row gap-4">
+                  <div class="text-left font-semibold text-red-600">Rp 3.000</div>
+                  <!-- <div class="text-left text-gray-500 line-through">Rp 3.000</div> -->
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="mt-10 mb-4">
+                <div class="relative mt-2 rounded-md shadow-sm">
+                  <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</div>
+                  <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
+                  <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">+</div>
+                </div>
+              </div>
+            </td>
           </tr>
           <tr>
-            <td>Row 2 Data 1</td>
-            <td>Row 2 Data 2</td>
+            <td></td>
+            <td>
+              <div class="w-[100px]">
+                <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
+              </div>
+            </td>
+            <td>
+              <div class="class=flex flex-col">
+                <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcs</div>
+                <div class="flex flex-row gap-4">
+                  <div class="text-left font-semibold text-red-600">Rp 14.000</div>
+                  <div class="text-left text-gray-500 line-through">Rp 15.000</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="mt-10 mb-4 w-[150px]">
+                <div class="relative mt-2 rounded-md shadow-sm">
+                  <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</div>
+                  <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
+                  <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">+</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <div class="w-[100px]">
+                <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
+              </div>
+            </td>
+            <td>
+              <div class="class=flex flex-col">
+                <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcs</div>
+                <div class="flex flex-row gap-4">
+                  <div class="text-left font-semibold text-red-600">Rp 14.000</div>
+                  <div class="text-left text-gray-500 line-through">Rp 15.000</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="mt-10 mb-4 w-[150px]">
+                <div class="relative mt-2 rounded-md shadow-sm">
+                  <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</div>
+                  <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
+                  <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">+</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <div class="w-[100px]">
+                <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
+              </div>
+            </td>
+            <td>
+              <div class="class=flex flex-col">
+                <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcs</div>
+                <div class="flex flex-row gap-4">
+                  <div class="text-left font-semibold text-red-600">Rp 14.000</div>
+                  <div class="text-left text-gray-500 line-through">Rp 15.000</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="mt-10 mb-4 w-[150px]">
+                <div class="relative mt-2 rounded-md shadow-sm">
+                  <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</div>
+                  <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
+                  <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">+</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <div class="w-[100px]">
+                <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
+              </div>
+            </td>
+            <td>
+              <div class="class=flex flex-col">
+                <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcs</div>
+                <div class="flex flex-row gap-4">
+                  <div class="text-left font-semibold text-red-600">Rp 14.000</div>
+                  <div class="text-left text-gray-500 line-through">Rp 15.000</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="mt-10 mb-4 w-[150px]">
+                <div class="relative mt-2 rounded-md shadow-sm">
+                  <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</div>
+                  <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
+                  <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">+</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <div class="w-[100px]">
+                <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
+              </div>
+            </td>
+            <td>
+              <div class="class=flex flex-col">
+                <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcsIndomie Goreng 5 pcs</div>
+                <div class="flex flex-row gap-4">
+                  <div class="text-left font-semibold text-red-600">Rp 14.000</div>
+                  <div class="text-left text-gray-500 line-through">Rp 15.000</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="mt-10 mb-4 w-[150px]">
+                <div class="relative mt-2 rounded-md shadow-sm">
+                  <div id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</div>
+                  <input type="number" name="jumlahProdukInput" id="jumlahProdukInput" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
+                  <div id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">+</div>
+                </div>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -116,7 +274,7 @@
             </g>
           </svg>
         </div>
-        <div class="w-full flex justify-center items-center text-xl text-gray-700 tracking-wide">32</div>
+        <div class="w-full flex justify-center items-center text-xl text-gray-700 tracking-wide">2</div>
       </button>
     </div>
   </body>
@@ -127,8 +285,24 @@
 
   <!-- datatables -->
   <script>
-    $(document).ready(function () {
-      $("#myTable").DataTable();
+    new DataTable("#myTable", {
+      scrollX: "auto",
+      // scrollY: "55vh",
+      columnDefs: [
+        {
+          orderable: false,
+          render: DataTable.render.select(),
+          targets: 0,
+        },
+        {
+          orderable: false,
+          targets: 1,
+        },
+      ],
+      select: {
+        style: "multi",
+        selector: "td:first-child",
+      },
     });
   </script>
 
