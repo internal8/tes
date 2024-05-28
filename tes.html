@@ -521,16 +521,17 @@
               buttonsStyling: false,
             }).then(() => {
               html5QrcodeScanner.resume(); // Resume the scanner
-            });
-          } else {
-            Swal.fire({
-              title: "Error",
-              text: "Barcode Tidak ditemukan!",
-              icon: "error",
-            }).then(() => {
-              html5QrcodeScanner.resume(); // Resume the scanner
+              return;
             });
           }
+        });
+
+        Swal.fire({
+          title: "Error",
+          text: "Barcode Tidak ditemukan!",
+          icon: "error",
+        }).then(() => {
+          html5QrcodeScanner.resume(); // Resume the scanner
         });
       } else {
         Swal.fire({
