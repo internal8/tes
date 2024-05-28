@@ -476,10 +476,10 @@
     function onScanSuccess(decodedText, decodedResult) {
       html5QrcodeScanner.pause(); // Pause the scanner
       if (products && products.length > 0) {
-        sound.currentTime = 0;
-        sound.play();
         products.forEach((product) => {
           if (decodedText == product.kode_barang) {
+            sound.currentTime = 0;
+            sound.play();
             Swal.fire({
               imageUrl: product.foto_barang[0],
               imageHeight: 300,
