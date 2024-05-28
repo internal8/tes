@@ -50,9 +50,10 @@
   <body>
     <!-- Konten scanner -->
     <div id="reader"></div>
+    <audio id="scanSound" src="store-scanner-beep-90395.mp3" class="hidden"></audio>
 
     <!-- Konten daftar belanja -->
-    <div id="konten-daftar-belanja" class="absolute inset-0 z-[100] bg-white flex flex-col pt-20 overflow-y-auto">
+    <div id="konten-daftar-belanja" class="absolute invar sound = document.getElementById('scanSound'); sound.play();var sound = document.getElementById('scanSound'); sound.play();set-0 z-[100] bg-white flex flex-col pt-20 overflow-y-auto">
       <!-- tombol close -->
       <button id="close-button" class="absolute top-2 right-2 px-4 py-4">
         <svg class="fill-gray-800 text-gray-100 w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,26 +64,25 @@
       </button>
 
       <!-- Table daftar belanja -->
-      <h1 class="text-red-700 text-4xl mb-4">Daftar Belanja</h1>
-      <table id="myTable" class="display nowrap !w-full bg-white">
-        <thead>
+      <div class="w-full text-2xl font-semibold py-4 bg-gray-100 mt-6 mb-4">Daftar Belanja</div>
+      <table id="myTable" class="w-full h-full bg-white">
+        <!-- <thead>
           <tr>
             <th></th>
             <th>Foto</th>
             <th>Deskripsi</th>
             <th>Jumlah</th>
           </tr>
-        </thead>
+        </thead> -->
         <tbody>
-          <tr>
-            <td></td>
-            <td>
-              <div class="w-[120px]">
+          <tr class="odd:bg-gray-100/80">
+            <td class="w-[160px]">
+              <div class="w-[160px] px-2">
                 <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
               </div>
             </td>
             <td>
-              <div class="class=flex flex-col">
+              <div class="class=flex flex-col w-[320px]">
                 <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 1 pcs</div>
                 <div id="hargaSetiapItemTablePembayaran" class="flex flex-row gap-4">
                   <div name="hargaBayarSetiapItemTablePembayaran" id="hargaBayarSetiapItemTablePembayaran" class="text-left font-semibold text-red-600">3000</div>
@@ -90,8 +90,8 @@
                 </div>
               </div>
             </td>
-            <td>
-              <div class="mt-10 mb-4 w-[150px]">
+            <td class="flex justify-end">
+              <div class="mt-10 mb-4 w-[150px] px-2">
                 <div class="relative mt-2 rounded-md shadow-sm">
                   <button id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</button>
                   <input type="number" name="jumlahProdukTableBelanja" id="jumlahProdukTableBelanja" min="0" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
@@ -100,15 +100,14 @@
               </div>
             </td>
           </tr>
-          <tr>
-            <td></td>
-            <td>
-              <div class="w-[120px]">
+          <tr class="odd:bg-gray-100/80">
+            <td class="w-[160px]">
+              <div class="w-[160px] px-2">
                 <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
               </div>
             </td>
             <td>
-              <div class="class=flex flex-col">
+              <div class="class=flex flex-col w-[320px]">
                 <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 5 pcs</div>
                 <div id="hargaSetiapItemTablePembayaran" class="flex flex-row gap-4">
                   <div name="hargaBayarSetiapItemTablePembayaran" id="hargaBayarSetiapItemTablePembayaran" class="text-left font-semibold text-red-600">13000</div>
@@ -116,8 +115,33 @@
                 </div>
               </div>
             </td>
+            <td class="flex justify-end">
+              <div class="mt-10 mb-4 w-[150px] px-2">
+                <div class="relative mt-2 rounded-md shadow-sm">
+                  <button id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</button>
+                  <input type="number" name="jumlahProdukTableBelanja" id="jumlahProdukTableBelanja" min="0" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
+                  <button id="increment" class="absolute inset-y-0 right-0 flex items-center pr-3">+</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd:bg-gray-100/80">
+            <td class="w-[160px]">
+              <div class="w-[160px] px-2">
+                <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-2583228/indomie_indomie-goreng-mie-instan--85g--_full02.jpg" alt="Product Image" class="w-full h-auto" />
+              </div>
+            </td>
             <td>
-              <div class="mt-10 mb-4 w-[150px]">
+              <div class="class=flex flex-col w-[320px]">
+                <div class="text-left max-w-[300px] overflow-auto py-2">Indomie Goreng 5 pcs</div>
+                <div id="hargaSetiapItemTablePembayaran" class="flex flex-row gap-4">
+                  <div name="hargaBayarSetiapItemTablePembayaran" id="hargaBayarSetiapItemTablePembayaran" class="text-left font-semibold text-red-600">13000</div>
+                  <div name="hargaRegulerSetiapItemTablePembayaran" id="hargaRegulerSetiapItemTablePembayaran" class="text-left text-gray-500 line-through">15000</div>
+                </div>
+              </div>
+            </td>
+            <td class="flex justify-end">
+              <div class="mt-10 mb-4 w-[150px] px-2">
                 <div class="relative mt-2 rounded-md shadow-sm">
                   <button id="decrement" class="absolute inset-y-0 left-0 flex items-center pl-3">-</button>
                   <input type="number" name="jumlahProdukTableBelanja" id="jumlahProdukTableBelanja" min="0" class="block w-full text-center rounded-md border-0 py-1.5 pl-7 pr-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="0" />
@@ -128,9 +152,8 @@
           </tr>
         </tbody>
       </table>
-
       <!-- Perhitungan -->
-      <div class="w-full text-2xl font-semibold py-4 bg-gray-100 mt-6">Pembayaran</div>
+      <div class="w-full text-2xl font-semibold py-4 bg-gray-100 mt-6">Total Belanja</div>
       <div class="flex flex-row mt-4 mx-2">
         <div class="flex-1 text-left">Total harga (<span id="jumlahBarangPadaPembayaran"></span> barang)</div>
         <div class="flex-1 text-right"><span id="totalHargaBarangPadaPembayaran"></span></div>
@@ -144,9 +167,29 @@
         <div class="flex-1 text-right text-lg font-bold"><span id="totalHargaBayarPadaPembayaran"></span></div>
       </div>
 
+      <!-- Pembayaran -->
+      <div class="w-full text-2xl font-semibold py-4 bg-gray-100 mt-6">Pembayaran</div>
+      <div class="w-full mt-4 px-2">
+        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Metode pembayaran</label>
+        <select name="metode_pembayaran" id="metode_pembayaran" class="w-full">
+          <option value="Cash">Cash</option>
+          <option value="Transfer">Transfer</option>
+        </select>
+      </div>
+
+      <div class="w-full mt-4 px-2">
+        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Uang</label>
+        <input type="text" name="jumlahUangPembayaran" id="jumlahUangPembayaran" value="0" class="w-full" />
+      </div>
+
+      <div class="w-full mt-4 px-2">
+        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kembalian</label>
+        <div>4000</div>
+      </div>
+
       <!-- tombol aksi -->
-      <button class="text-white text-2xl font-bold mt-10 mb-6 bg-sky-700 py-4 mx-2 rounded-xl">Bayar</button>
-      <button class="text-white text-2xl mb-4 bg-red-700 py-4 mx-2 rounded-xl">Batalkan Semua</button>
+      <button class="text-white text-2xl font-bold mt-10 mb-6 bg-sky-700 py-2 mx-2 rounded-xl">Bayar</button>
+      <button class="text-white text-2xl mb-4 bg-red-700 py-2 mx-2 rounded-xl">Batalkan Semua</button>
     </div>
 
     <!-- Menu bawah layar -->
@@ -201,27 +244,74 @@
 
   <!-- datatables -->
   <script>
-    var table_belanja = new DataTable("#myTable", {
-      scrollX: "auto",
-      paging: false,
-      info: false, // Disable pagination
-      // scrollY: "55vh",
-      columnDefs: [
-        {
-          orderable: false,
-          render: DataTable.render.select(),
-          targets: 0,
-        },
-        {
-          orderable: false,
-          targets: 1,
-        },
-      ],
-      select: {
-        style: "multi",
-        selector: "td:first-child",
-      },
-    });
+    // var table_belanja = new DataTable("#myTabl1e", {
+    //   scrollX: "auto",
+    //   paging: false,
+    //   info: false, // Disable pagination
+    //   // scrollY: "55vh",
+    //   columnDefs: [
+    //     {
+    //       orderable: false,
+    //       render: DataTable.render.select(),
+    //       targets: 0,
+    //     },
+    //     {
+    //       orderable: false,
+    //       targets: 1,
+    //     },
+    //   ],
+    //   select: {
+    //     style: "multi",
+    //     selector: "td:first-child",
+    //   },
+    // });
+  </script>
+
+  <!-- merubah format rupiah pada datatabels -->
+  <script>
+    function datatablesRupiah() {
+      var elements1 = document.querySelectorAll("#hargaBayarSetiapItemTablePembayaran");
+
+      // Iterasi melalui setiap elemen dan memformat isinya
+      elements1.forEach(function (element) {
+        var value = parseFloat(element.innerText); // Konversi teks elemen ke angka
+        element.innerText = formatRupiah(value); // Perbarui teks elemen dengan format Rupiah
+      });
+
+      var elements2 = document.querySelectorAll("#hargaRegulerSetiapItemTablePembayaran");
+
+      // Iterasi melalui setiap elemen dan memformat isinya
+      elements2.forEach(function (element) {
+        var value = parseFloat(element.innerText); // Konversi teks elemen ke angka
+        element.innerText = formatRupiah(value); // Perbarui teks elemen dengan format Rupiah
+      });
+    }
+  </script>
+
+  <!-- format rupiah -->
+  <script>
+    function formatRupiah(angka) {
+      // Konversi angka ke string, dan gunakan abs untuk menghilangkan tanda negatif sementara waktu
+      var numberString = Math.abs(angka).toString();
+
+      // Pecah string menjadi bagian-bagian sebelum dan sesudah titik desimal
+      var split = numberString.split(".");
+      var sisa = split[0].length % 3;
+      var rupiah = split[0].substr(0, sisa);
+      var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+      // Gabungkan kembali angka yang telah dipisahkan dengan titik
+      if (ribuan) {
+        var separator = sisa ? "." : "";
+        rupiah += separator + ribuan.join(".");
+      }
+
+      // Menambahkan tanda negatif jika angka asli negatif
+      var hasil = (angka < 0 ? "-Rp " : "Rp ") + rupiah;
+
+      // Mengembalikan hasil akhir
+      return hasil;
+    }
   </script>
 
   <!-- perhitungan belanja -->
@@ -249,7 +339,7 @@
         try {
           // Mendapatkan nilai dari div hargaRegulerSetiapItemTablePembayaran
           var hargaReguler = item.querySelector("#hargaRegulerSetiapItemTablePembayaran").innerText.trim();
-          var hargaRegulerNumber = parseFloat(hargaReguler);
+          var hargaRegulerNumber = parseFloat(hargaReguler.replace(/[^\d]/g, ""));
         } catch (error) {
           var hargaRegulerNumber = 0;
         }
@@ -257,7 +347,7 @@
         try {
           // Mendapatkan nilai dari div hargaBayarSetiapItemTablePembayaran
           var hargaBayar = item.querySelector("#hargaBayarSetiapItemTablePembayaran").innerText.trim();
-          var hargaBayarNumber = parseFloat(hargaBayar);
+          var hargaBayarNumber = parseFloat(hargaBayar.replace(/[^\d]/g, ""));
         } catch (error) {
           var hargaBayarNumber = 0;
         }
@@ -271,7 +361,7 @@
         }
         indexJumah++;
       });
-      document.getElementById("totalHargaBarangPadaPembayaran").innerText = hargaFinal;
+      document.getElementById("totalHargaBarangPadaPembayaran").innerText = formatRupiah(hargaFinal);
     }
 
     function calculateTotalHargaBayar() {
@@ -281,46 +371,47 @@
         try {
           // Mendapatkan nilai dari div hargaBayarSetiapItemTablePembayaran
           var hargaBayar = item.querySelector("#hargaBayarSetiapItemTablePembayaran").innerText.trim();
-          var hargaBayarNumber = parseFloat(hargaBayar);
+          var hargaBayarNumber = parseFloat(hargaBayar.replace(/[^\d]/g, ""));
         } catch (error) {
           var hargaBayarNumber = 0;
         }
         hargaBayarAkhir += hargaBayarNumber * jumlahBarang[indexJumah];
         indexJumah++;
       });
-      document.getElementById("totalHargaBayarPadaPembayaran").innerText = hargaBayarAkhir;
+      document.getElementById("totalHargaBayarPadaPembayaran").innerText = formatRupiah(hargaBayarAkhir);
     }
 
     function calculateTotalHargaDiskon() {
       hargaDiskon = hargaBayarAkhir - hargaFinal;
-      document.getElementById("totalHargaDiskonPadaPembayaran").innerText = hargaDiskon;
+      document.getElementById("totalHargaDiskonPadaPembayaran").innerText = formatRupiah(hargaDiskon);
     }
 
+    datatablesRupiah();
     calculateTotalBarang();
     calculateTotalHargaBarang();
     calculateTotalHargaBayar();
     calculateTotalHargaDiskon();
 
-    table_belanja.on("draw", function () {
-      calculateTotalBarang();
-      calculateTotalHargaBarang();
-      calculateTotalHargaBayar();
-      calculateTotalHargaDiskon();
-    });
+    // table_belanja.on("draw", function () {
+    //   calculateTotalBarang();
+    //   calculateTotalHargaBarang();
+    //   calculateTotalHargaBayar();
+    //   calculateTotalHargaDiskon();
+    // });
 
-    table_belanja.on("click", "button", function () {
-      calculateTotalBarang();
-      calculateTotalHargaBarang();
-      calculateTotalHargaBayar();
-      calculateTotalHargaDiskon();
-    });
+    // table_belanja.on("click", "button", function () {
+    //   calculateTotalBarang();
+    //   calculateTotalHargaBarang();
+    //   calculateTotalHargaBayar();
+    //   calculateTotalHargaDiskon();
+    // });
 
-    table_belanja.on("change", "input", function () {
-      calculateTotalBarang();
-      calculateTotalHargaBarang();
-      calculateTotalHargaBayar();
-      calculateTotalHargaDiskon();
-    });
+    // table_belanja.on("change", "input", function () {
+    //   calculateTotalBarang();
+    //   calculateTotalHargaBarang();
+    //   calculateTotalHargaBayar();
+    //   calculateTotalHargaDiskon();
+    // });
   </script>
 
   <!-- click event -->
@@ -362,6 +453,8 @@
 
   <!-- scanner -->
   <script>
+    var sound = document.getElementById("scanSound");
+
     let html5QrcodeScanner;
     // Increment and decrement functionality
     document.querySelectorAll("#increment").forEach((button) => {
@@ -381,6 +474,7 @@
     });
 
     function onScanSuccess(decodedText, decodedResult) {
+      sound.play();
       html5QrcodeScanner.pause(); // Pause the scanner
       if (products && products.length > 0) {
         products.forEach((product) => {
