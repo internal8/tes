@@ -78,15 +78,10 @@
     let html5QrcodeScanner;
 
     function onScanSuccess(decodedText, decodedResult) {
-      html5QrcodeScanner.pause(); // Pause the scanner
-
       if (list_products["products"].length > 0) {
-        Swal.fire({
-          title: decodedText,
-          icon: "success",
-        });
         list_products["products"].forEach((product) => {
           if (decodedText == product.kode_barang) {
+            html5QrcodeScanner.pause(); // Pause the scanner
             sound.currentTime = 0;
             sound.play();
             Swal.fire({
@@ -106,7 +101,7 @@
       } else {
         Swal.fire({
           title: "Error",
-          text: "Data Produk kosong!",
+          text: "Data produk tidak ditemukan!",
           icon: "error",
         });
       }
