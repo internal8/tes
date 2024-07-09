@@ -91,8 +91,8 @@
               imageHeight: 300,
               html: `
                 <div class="flex flex-wrap gap-4 ">
-                    <h4 class="w-full font-bold text-lg text-center">Product 1</h4>
-                    <p class="w-full text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <h4 class="w-full font-bold text-lg text-center">${product.nama_barang}</h4>
+                    <p class="w-full text-gray-600 text-center">${product.harga_jual}</p>
                 </div>
                 `,
             }).then(() => {
@@ -109,13 +109,7 @@
       }
     }
 
-    function onScanFailure(error) {
-      Swal.fire({
-        title: "Error",
-        text: "Scanner error!",
-        icon: "error",
-      });
-    }
+    function onScanFailure(error) {}
 
     document.addEventListener("DOMContentLoaded", function () {
       html5QrcodeScanner = new Html5QrcodeScanner("reader", {
