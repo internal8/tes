@@ -126,7 +126,7 @@
     // Fungsi untuk mengambil data dari file JSON lokal dan menyimpannya ke variabel
     async function fetchProducts() {
       try {
-        const response = await fetch("data_listing.json");
+        const response = await fetch("data_product.json");
         const data = await response.json();
         return data.products;
       } catch (error) {
