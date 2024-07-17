@@ -85,12 +85,11 @@
       #myTable.dataTable tbody tr:focus {
         background-color: yellow;
       }
-
     </style>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="tailwind.css" />
 
@@ -98,7 +97,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.2/css/select.dataTables.css" />
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
+
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/select/2.0.2/js/dataTables.select.js"></script>
   </head>
@@ -125,7 +124,7 @@
   <!-- memuat data produk -->
   <script>
     let list_products;
-    
+
     // Fungsi untuk mengambil data dari file JSON lokal dan menyimpannya ke variabel
     async function fetchProducts() {
       try {
@@ -143,28 +142,33 @@
     async function createProductVariable() {
       list_products = await fetchProducts();
     }
-    $(document).ready( function () {
+    $(document).ready(function () {
       createProductVariable();
-  } );
+    });
   </script>
 
   <!-- datatables -->
-   <script>
-    function createDataTables(data){
-        $('#myTable').DataTable({
-          data: data["products"],
-          columns: [
-            // Define your table columns here
-            { title: 'Nama Produk', data: 'nama_produk' }, // Replace with your property names
-            { title: 'Harga', data: 'harga', render: function (data, type, row) { // Add renderer for property1
+  <script>
+    function createDataTables(data) {
+      $("#myTable").DataTable({
+        data: data["products"],
+        columns: [
+          // Define your table columns here
+          { title: "Nama Produk", data: "nama_produk" }, // Replace with your property names
+          {
+            title: "Harga",
+            data: "harga",
+            render: function (data, type, row) {
+              // Add renderer for property1
               return `<span class="font-bold"> ${data} </span>`; // Format data with "Rp" prefix
-          } }, // Replace with your property names
-            // Add more columns as needed
-          ],
-          pageLength: 50,
-        });
-    };
-   </script>
+            },
+          }, // Replace with your property names
+          // Add more columns as needed
+        ],
+        pageLength: 50,
+      });
+    }
+  </script>
 
   <!-- scanner -->
   <script>
@@ -181,13 +185,17 @@
             sound.play();
             // tampilkan informasi produk
             Swal.fire({
-              icon: "success",
+              icon: hargaTokoCheck(product.apakah_harga_toko),
               html: `
                 <div class="flex flex-wrap gap-4 ">
                     <h4 class="w-full font-bold text-xl text-center">${product.nama_produk}</h4>
                     <p class="w-full text-gray-600 text-center">${product.harga}</p>
                 </div>
                 `,
+              customClass: {
+                confirmButton: "flex-1 bg-blue-600 text-white font-bold border-blue-600 py-2 px-4 rounded",
+              },
+              buttonsStyling: false,
             }).then(() => {
               html5QrcodeScanner.resume(); // Resume the scanner
             });
@@ -195,8 +203,8 @@
         });
       } else {
         Swal.fire({
-          title: "Error",
-          text: "Data produk tidak ditemukan!",
+          title: "Server Error!",
+          text: "Data produk gagal dimuat!",
           icon: "error",
         });
       }
@@ -216,5 +224,15 @@
       });
       html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     });
+  </script>
+
+  <script>
+    function hargaTokoCheck(apakah_harga_toko) {
+      if (apakah_harga_toko == "ya") {
+        return "success";
+      } else {
+        return "warning";
+      }
+    }
   </script>
 </html>
