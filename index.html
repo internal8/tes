@@ -6,9 +6,7 @@
     <title>Mobile Friendly Barcode Scanner</title>
     <style>
       body {
-        font-family: "Quattrocento Sans", sans-serif;
-        font-weight: 400;
-        font-size: medium;
+        font-family: "Inter", sans-serif;
         text-align: center;
         margin: 0;
         padding: 10px;
@@ -89,7 +87,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="tailwind.css" />
 
@@ -109,9 +107,53 @@
     </div>
     <!-- Konten scanner -->
     <div id="reader"></div>
-    <!-- Konten table -->
-    <div class="mx-auto my-4 p-8 border border-gray-400 bg-white rounded-md shadow-md">
-      <table id="myTable" class="display strip hover cell-border responsive text-left"></table>
+    <!-- Konten table barang -->
+    <div class="mx-auto overflow-x-auto my-4 p-8 border border-gray-400 bg-white rounded-md shadow-md">
+      <span class="text-2xl font-bold">Data Barang</span>
+      <div class="pt-6">
+        <table id="myTable" class="display strip hover cell-border responsive text-left"></table>
+      </div>
+    </div>
+    <!-- Konten table belanjaan -->
+    <div class="mx-auto my-4 p-8 border-4 border-yellow-500 rounded-md shadow-md">
+      <span class="text-2xl font-bold">🛒 Keranjang 🛒</span>
+      <div class="pt-6 overflow-x-auto">
+        <table id="myTableBelanjaan" class="display strip hover cell-border responsive text-left"></table>
+      </div>
+      <!-- perhitungan belanjaan -->
+      <div class="mt-10 flex flex-col gap-2">
+        <div class="flex flex-row gap-4">
+          <span class="w-full text-left md:text-right font-bold content-center">Total Belanjaan</span>
+          <div class="w-auto relative rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+              <span class="font-bold">Rp</span>
+            </div>
+            <input type="text" name="priceTotalHargaBelanjaan" id="priceTotalHargaBelanjaan" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
+          </div>
+        </div>
+        <div class="flex flex-row gap-4">
+          <span class="w-full text-left md:text-right font-bold content-center">Uang</span>
+          <div class="w-auto relative rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+              <span class="font-bold">Rp</span>
+            </div>
+            <input type="text" name="priceTotalUangPembayaran" id="priceTotalUangPembayaran" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" min="0" oninput="updateKembalian()" />
+          </div>
+        </div>
+        <div class="flex flex-row gap-4">
+          <span class="w-full text-left md:text-right font-bold content-center">Kembalian</span>
+          <div class="w-auto relative rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+              <span class="font-bold">Rp</span>
+            </div>
+            <input type="text" name="priceTotalUangKembalian" id="priceTotalUangKembalian" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
+          </div>
+        </div>
+        <div class="flex flex-row gap-2 mt-4">
+          <button class="w-full rounded-md border border-gray-500 shadow-md p-2 bg-gray-400 text-black font-bold" onclick="hapusSeluruhDataBelanjaan()">Hapus semua</button>
+          <button class="w-full rounded-md border border-black shadow-md p-2 bg-yellow-400 text-black font-bold">Bayar</button>
+        </div>
+      </div>
     </div>
     <!-- Audio -->
     <audio id="scanSound" src="store-scanner-beep-90395.mp3" class="hidden"></audio>
@@ -131,7 +173,8 @@
         const response = await fetch("https://raw.githubusercontent.com/internal8/tes/main/data_product.json");
         const data = await response.json();
         // buat datatables
-        createDataTables(data);
+        createDataTablesBarang(data);
+        createDataTablesBelanjaan();
         return data;
       } catch (error) {
         alert("Error fetching products:", error);
@@ -149,7 +192,7 @@
 
   <!-- datatables -->
   <script>
-    function createDataTables(data) {
+    function createDataTablesBarang(data) {
       $("#myTable").DataTable({
         data: data["products"],
         columns: [
@@ -168,7 +211,7 @@
                 return `<span class=""> ${data} </span>`;
               }
             },
-          }, // Replace with your property names
+          },
           {
             title: "Harga",
             data: "harga",
@@ -176,11 +219,41 @@
               // Add renderer for property1
               return `<span class="font-bold"> ${data} </span>`; // Format data with "Rp" prefix
             },
-          }, // Replace with your property names
-          // Add more columns as needed
+          },
+          {
+            title: "Keranjang",
+            render: function (data, type, row) {
+              // Add renderer for property1
+              return `<div>
+                        <button class="w-full bg-yellow-400 text-black border border-black font-bold py-2 px-4 rounded shadow-md" onclick="addBarang('${row.kode_produk}')">
+                          Beli
+                        </button>
+                      </div>`; // Format data with "Rp" prefix
+            },
+          },
         ],
-        pageLength: 50,
+        pageLength: 10,
       });
+    }
+
+    function createDataTablesBelanjaan() {
+      $("#myTableBelanjaan").DataTable({
+        columns: [
+          // Define your table columns here
+          {
+            title: "Nama Produk",
+          },
+          {
+            title: "Jumlah",
+          },
+          {
+            title: "Total",
+          },
+        ],
+        pageLength: 10,
+        // scrollX: true,
+      });
+      tampilkanDataKeranjang();
     }
   </script>
 
@@ -207,10 +280,17 @@
                 </div>
                 `,
               customClass: {
-                confirmButton: "flex-1 bg-blue-600 text-white font-bold border-blue-600 py-2 px-4 rounded",
+                cancelButton: "rounded-md border border-gray-500 shadow-md p-2 bg-gray-400 text-black font-bold",
+                confirmButton: "bg-yellow-400 text-black border border-black font-bold py-2 px-4 rounded shadow-md",
               },
-              buttonsStyling: false,
-            }).then(() => {
+              confirmButtonText: "Beli",
+              showCancelButton: true,
+              reverseButtons: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                addBarang(product.kode_produk);
+              } else {
+              }
               html5QrcodeScanner.resume(); // Resume the scanner
             });
           }
@@ -228,7 +308,7 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       html5QrcodeScanner = new Html5QrcodeScanner("reader", {
-        fps: 30,
+        fps: 10,
         qrbox: {
           width: "100%",
           height: "100%",
@@ -240,6 +320,7 @@
     });
   </script>
 
+  <!-- Kumpulan Fungsi -->
   <script>
     function hargaTokoCheck(apakah_harga_toko) {
       if (apakah_harga_toko == "ya") {
@@ -247,6 +328,172 @@
       } else {
         return "warning";
       }
+    }
+
+    function addBarang(kode_produk) {
+      let produk = list_products["products"].find((produk) => produk.kode_produk === kode_produk);
+
+      // Jika produk ditemukan, kembalikan nama_produk
+      if (!produk) {
+        // Jika produk tidak ditemukan, kembalikan string "Produk tidak ditemukan"
+        alert("Produk tidak ditemukan");
+      }
+
+      // Validasi input
+      if (!produk.nama_produk || isNaN(produk.harga)) {
+        alert("nama barang tidak ditemukan");
+      }
+
+      // Cek apakah dataBarang ada di localStorage
+      try {
+        dataArray = JSON.parse(localStorage.getItem("dataBarang")) || []; // Initialize with empty array if parsing fails
+      } catch (error) {
+        dataArray = [{}]; // Set dataArray to empty array if parsing fails
+      }
+
+      // Cari object dengan kode = kode_produk
+      const foundProduk = dataArray.find((obj) => obj.kode_produk === kode_produk);
+
+      // Jika object sudah ada maka totalnya ditambah 1
+      if (foundProduk) {
+        foundProduk.total = parseFloat(filterAngkaKoma(foundProduk.total.toString())) + 1; // Update total property
+        localStorage.setItem("dataBarang", JSON.stringify(dataArray)); // Update localStorage directly
+      } else {
+        // Jika object belum ada maka tambahkan ke dataBarang
+        const data = {
+          kode_produk: produk.kode_produk,
+          nama_produk: produk.nama_produk,
+          harga: produk.harga,
+          total: 1,
+        };
+        dataArray.push(data);
+        localStorage.setItem("dataBarang", JSON.stringify(dataArray));
+      }
+
+      tampilkanDataKeranjang();
+    }
+
+    function updateJumlahSebuahBarang(kode_produk, jumlah) {
+      let produk = list_products["products"].find((produk) => produk.kode_produk === kode_produk);
+
+      // Jika produk ditemukan, kembalikan nama_produk
+      if (!produk) {
+        // Jika produk tidak ditemukan, kembalikan string "Produk tidak ditemukan"
+        alert("Produk tidak ditemukan");
+      }
+
+      // Validasi input
+      if (!produk.nama_produk || isNaN(produk.harga)) {
+        alert("nama barang tidak ditemukan");
+      }
+
+      // Cek apakah dataBarang ada di localStorage
+      try {
+        dataArray = JSON.parse(localStorage.getItem("dataBarang")) || []; // Initialize with empty array if parsing fails
+      } catch (error) {
+        dataArray = [{}]; // Set dataArray to empty array if parsing fails
+      }
+
+      // Cari object dengan kode = kode_produk
+      const foundProduk = dataArray.find((obj) => obj.kode_produk === kode_produk);
+
+      // Jika object sudah ada maka totalnya ditambah 1
+      if (foundProduk) {
+        foundProduk.total = filterAngkaKoma(jumlah); // Update total property
+        localStorage.setItem("dataBarang", JSON.stringify(dataArray)); // Update localStorage directly
+      } else {
+        // Jika object belum ada maka tambahkan ke dataBarang
+        const data = {
+          kode_produk: produk.kode_produk,
+          nama_produk: produk.nama_produk,
+          harga: produk.harga,
+          total: 1,
+        };
+        dataArray.push(data);
+        localStorage.setItem("dataBarang", JSON.stringify(dataArray));
+      }
+
+      tampilkanDataKeranjang();
+    }
+
+    // Tampilkan data localStorage ke datatables
+    function tampilkanDataKeranjang() {
+      try {
+        const dataArray = JSON.parse(localStorage.getItem("dataBarang")) || [];
+        // Clear existing data
+        $("#myTableBelanjaan").DataTable().clear();
+
+        // Add new data rows
+        dataArray.forEach((rowData) => {
+          $("#myTableBelanjaan")
+            .DataTable()
+            .row.add([
+              `<div class="w-full max-w-sm mx-auto min-w-[160px]">
+                ${rowData["nama_produk"]} 
+                <span class="font-bold">
+                  (Rp ${formatRibuan(rowData["harga"])})
+                </span>
+              </div>`,
+              `<div class="flex flex-row items-center justify-center w-full max-w-sm mx-auto min-w-[80px]">
+                <input type="number" class="px-3 py-2 border border-gray-300 text-gray-700 rounded-md w-full" value="${rowData["total"]}" onchange="updateJumlahSebuahBarang('${rowData["kode_produk"]}', this.value)">
+              </div>`,
+              `<div class="text-right font-bold min-w-[80px]">
+                Rp ${formatRibuan(parseFloat(filterAngkaKoma(rowData["harga"]) * rowData["total"]))}
+              </div>`,
+            ])
+            .draw();
+        });
+        updateTotalBelanjaan();
+      } catch (error) {}
+    }
+
+    function hapusSeluruhDataBelanjaan() {
+      localStorage.removeItem("dataBarang");
+      $("#myTableBelanjaan").DataTable().clear().draw();
+      document.getElementById("priceTotalHargaBelanjaan").value = 0;
+      document.getElementById("priceTotalUangPembayaran").value = 0;
+      document.getElementById("priceTotalUangKembalian").value = 0;
+    }
+
+    function updateTotalBelanjaan() {
+      const dataArray = JSON.parse(localStorage.getItem("dataBarang"));
+      let totalHarga = 0;
+
+      for (const item of dataArray) {
+        totalHarga += parseFloat(filterAngkaKoma(item.harga)) * parseFloat(filterAngkaKoma(item.total)); // Assuming your dataArray contains objects with a 'total' property
+      }
+
+      document.getElementById("priceTotalHargaBelanjaan").value = formatRibuan(totalHarga);
+      updateKembalian();
+    }
+
+    function updateKembalian() {
+      let hargaBelanjaan = parseFloat(filterAngkaKoma(document.getElementById("priceTotalHargaBelanjaan").value));
+      let uangPembayaran = parseFloat(filterAngkaKoma(document.getElementById("priceTotalUangPembayaran").value));
+      let uangKembalian = uangPembayaran - hargaBelanjaan;
+
+      if (isNaN(hargaBelanjaan)) {
+        hargaBelanjaan = 0; // Set hargaBelanjaan to 0 if parsing fails
+      }
+
+      if (isNaN(uangPembayaran)) {
+        uangPembayaran = 0; // Set uangPembayaran to 0 if parsing fails
+      }
+
+      if (isNaN(uangKembalian)) {
+        uangKembalian = 0; // Set uangKembalian to 0 if parsing fails
+      }
+
+      document.getElementById("priceTotalUangPembayaran").value = formatRibuan(uangPembayaran);
+      document.getElementById("priceTotalUangKembalian").value = formatRibuan(uangKembalian);
+    }
+
+    function filterAngkaKoma(value) {
+      return value.toString().replace(/[^0-9]/g, ""); // Hapus semua karakter selain angka, tanda titik, dan koma
+    }
+
+    function formatRibuan(angka) {
+      return angka.toString().replace(/(\d)(?=(\d{3})+$)/g, "$1."); // Tambahkan koma setiap 3 digit
     }
   </script>
 </html>
