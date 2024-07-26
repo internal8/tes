@@ -102,11 +102,15 @@
 
   <body>
     <div class="mx-auto my-4 p-3 border border-gray-400 bg-white rounded-md shadow-md">
-      <div class="font-bold text-4xl">Barasi</div>
+      <div class="flex flex-row items-center justify-center">
+        <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-20 mr-2" />
+        <div class="font-bold text-5xl">Barasi</div>
+        <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-20 ml-4" />
+      </div>
       <div>Frozen Food</div>
     </div>
     <!-- Konten scanner -->
-    <div id="reader"></div>
+    <!-- <div id="reader"></div> -->
     <!-- Konten table barang -->
     <div class="mx-auto overflow-x-auto my-4 p-8 border border-gray-400 bg-white rounded-md shadow-md">
       <span class="text-2xl font-bold">Data Barang</span>
@@ -116,7 +120,14 @@
     </div>
     <!-- Konten table belanjaan -->
     <div class="mx-auto my-4 p-8 border-4 border-yellow-500 rounded-md shadow-md">
-      <span class="text-2xl font-bold">🛒 Keranjang 🛒</span>
+      <div class="flex">
+        <span class="flex-1"></span>
+        <span class="flex-1 text-2xl font-bold">🛒 Keranjang 🛒</span>
+        <div class="flex-1 text-right">
+          <span class="flex-1 bg-blue-500 cursor-pointer text-white font-bold py-2 px-4 rounded border border-black shadow-md" onclick="dialogAddCustomBarang()">+ Barang manual</span>
+        </div>
+      </div>
+
       <div class="pt-6 overflow-x-auto">
         <table id="myTableBelanjaan" class="display strip hover cell-border responsive text-left"></table>
       </div>
@@ -258,7 +269,7 @@
   </script>
 
   <!-- scanner -->
-  <script>
+  <!-- <script>
     var sound = document.getElementById("scanSound");
 
     let html5QrcodeScanner;
@@ -318,10 +329,40 @@
       });
       html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     });
-  </script>
+  </script> -->
 
   <!-- Kumpulan Fungsi -->
   <script>
+    function dialogAddCustomBarang() {
+      Swal.fire({
+        title: "Tambahkan Ke Keranjang",
+        html: `<div class="flex flex-col mt-4">
+                  <div class="mb-4">
+                    <span class="font-bold">Nama Barang</span>
+                    <input id="swal-input-nama-barang" class="swal2-input">
+                  </div>
+                  <div class="">
+                    <span class="font-bold">Harga Barang</span>
+                    <input id="swal-input-harga-barang" class="swal2-input">
+                  </div>
+               </div>
+              `,
+        customClass: {
+          cancelButton: "rounded-md border border-gray-500 shadow-md p-2 bg-gray-400 text-black font-bold",
+          confirmButton: "bg-yellow-400 text-black border border-black font-bold py-2 px-4 rounded shadow-md",
+        },
+        confirmButtonText: "Beli",
+        showCancelButton: true,
+        reverseButtons: true,
+        footer: '<span class="text-blue-600">Menambahkan barang yang tidak ditemukan ke keranjang</a>',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          addBarangCustome(document.getElementById("swal-input-nama-barang").value, document.getElementById("swal-input-harga-barang").value);
+        }
+        html5QrcodeScanner.resume(); // Resume the scanner
+      });
+    }
+
     function hargaTokoCheck(apakah_harga_toko) {
       if (apakah_harga_toko == "ya") {
         return "success";
@@ -373,20 +414,27 @@
       tampilkanDataKeranjang();
     }
 
+    function addBarangCustome(nama_produk, harga) {
+      // Cek apakah dataBarang ada di localStorage
+      try {
+        dataArray = JSON.parse(localStorage.getItem("dataBarang")) || []; // Initialize with empty array if parsing fails
+      } catch (error) {
+        dataArray = [{}]; // Set dataArray to empty array if parsing fails
+      }
+
+      const data = {
+        kode_produk: "barangcustome" + Math.floor(Math.random() * 999999),
+        nama_produk: nama_produk,
+        harga: harga,
+        total: 1,
+      };
+      dataArray.push(data);
+      localStorage.setItem("dataBarang", JSON.stringify(dataArray));
+
+      tampilkanDataKeranjang();
+    }
+
     function updateJumlahSebuahBarang(kode_produk, jumlah) {
-      let produk = list_products["products"].find((produk) => produk.kode_produk === kode_produk);
-
-      // Jika produk ditemukan, kembalikan nama_produk
-      if (!produk) {
-        // Jika produk tidak ditemukan, kembalikan string "Produk tidak ditemukan"
-        alert("Produk tidak ditemukan");
-      }
-
-      // Validasi input
-      if (!produk.nama_produk || isNaN(produk.harga)) {
-        alert("nama barang tidak ditemukan");
-      }
-
       // Cek apakah dataBarang ada di localStorage
       try {
         dataArray = JSON.parse(localStorage.getItem("dataBarang")) || []; // Initialize with empty array if parsing fails
@@ -396,21 +444,25 @@
 
       // Cari object dengan kode = kode_produk
       const foundProduk = dataArray.find((obj) => obj.kode_produk === kode_produk);
+      const indexFoundProduk = dataArray.findIndex((obj) => obj.kode_produk === kode_produk);
 
       // Jika object sudah ada maka totalnya ditambah 1
       if (foundProduk) {
         foundProduk.total = filterAngkaKoma(jumlah); // Update total property
         localStorage.setItem("dataBarang", JSON.stringify(dataArray)); // Update localStorage directly
-      } else {
-        // Jika object belum ada maka tambahkan ke dataBarang
-        const data = {
-          kode_produk: produk.kode_produk,
-          nama_produk: produk.nama_produk,
-          harga: produk.harga,
-          total: 1,
-        };
-        dataArray.push(data);
-        localStorage.setItem("dataBarang", JSON.stringify(dataArray));
+      }
+
+      // Hapus elemen jika jumlah 0
+      if (foundProduk && jumlah == 0) {
+        if (indexFoundProduk !== -1) {
+          dataArray.splice(indexFoundProduk, 1);
+          localStorage.setItem("dataBarang", JSON.stringify(dataArray));
+        }
+      }
+
+      // Jika object belum ada maka tambahkan ke dataBarang
+      if (!foundProduk) {
+        addBarang(kode_produk);
       }
 
       tampilkanDataKeranjang();
@@ -429,7 +481,7 @@
             .DataTable()
             .row.add([
               `<div class="w-full max-w-sm mx-auto min-w-[160px]">
-                ${rowData["nama_produk"]} 
+                ${rowData["nama_produk"]}
                 <span class="font-bold">
                   (Rp ${formatRibuan(rowData["harga"])})
                 </span>
