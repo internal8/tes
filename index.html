@@ -103,7 +103,7 @@
   <body>
     <div class="mx-auto my-4 p-3 border border-gray-400 bg-white rounded-md shadow-md">
       <div class="flex flex-row items-center justify-center">
-        <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-20 mr-2" />
+        <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-20" />
         <div class="font-bold text-5xl">Barasi</div>
         <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-20 ml-4" />
       </div>
@@ -119,7 +119,7 @@
       </div>
     </div>
     <!-- Konten table belanjaan -->
-    <div class="mx-auto my-4 p-8 border-4 border-yellow-500 rounded-md shadow-md">
+    <div class="mx-auto my-4 p-8 border-4 border-yellow-500 rounded-md shadow-md bg-white">
       <div class="flex">
         <span class="flex-1"></span>
         <span class="flex-1 text-2xl font-bold">🛒 Keranjang 🛒</span>
@@ -128,42 +128,49 @@
         </div>
       </div>
 
-      <div class="pt-6 overflow-x-auto">
-        <table id="myTableBelanjaan" class="display strip hover cell-border responsive text-left"></table>
+      <!-- bagian yang disimpan menjadi gambar -->
+      <div id="myDivKeranjang">
+        <div class="pt-6 overflow-x-auto">
+          <table id="myTableBelanjaan" class="display strip hover cell-border responsive text-left"></table>
+        </div>
+        <!-- perhitungan belanjaan -->
+        <div class="mt-10 flex flex-col gap-2">
+          <div class="flex flex-row gap-4">
+            <span class="w-full text-left md:text-right font-bold content-center">Total Belanjaan</span>
+            <div class="w-auto relative rounded-md shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+                <span class="font-bold">Rp</span>
+              </div>
+              <input type="text" name="priceTotalHargaBelanjaan" id="priceTotalHargaBelanjaan" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
+            </div>
+          </div>
+          <div class="flex flex-row gap-4">
+            <span class="w-full text-left md:text-right font-bold content-center">Uang</span>
+            <div class="w-auto relative rounded-md shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+                <span class="font-bold">Rp</span>
+              </div>
+              <input type="text" name="priceTotalUangPembayaran" id="priceTotalUangPembayaran" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" min="0" oninput="updateKembalian()" />
+            </div>
+          </div>
+          <div class="flex flex-row gap-4">
+            <span class="w-full text-left md:text-right font-bold content-center">Kembalian</span>
+            <div class="w-auto relative rounded-md shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+                <span class="font-bold">Rp</span>
+              </div>
+              <input type="text" name="priceTotalUangKembalian" id="priceTotalUangKembalian" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
+            </div>
+          </div>
+          <div>
+            <span id="tanggalPembelian"></span>
+          </div>
+        </div>
       </div>
-      <!-- perhitungan belanjaan -->
-      <div class="mt-10 flex flex-col gap-2">
-        <div class="flex flex-row gap-4">
-          <span class="w-full text-left md:text-right font-bold content-center">Total Belanjaan</span>
-          <div class="w-auto relative rounded-md shadow-sm">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-              <span class="font-bold">Rp</span>
-            </div>
-            <input type="text" name="priceTotalHargaBelanjaan" id="priceTotalHargaBelanjaan" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
-          </div>
-        </div>
-        <div class="flex flex-row gap-4">
-          <span class="w-full text-left md:text-right font-bold content-center">Uang</span>
-          <div class="w-auto relative rounded-md shadow-sm">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-              <span class="font-bold">Rp</span>
-            </div>
-            <input type="text" name="priceTotalUangPembayaran" id="priceTotalUangPembayaran" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" min="0" oninput="updateKembalian()" />
-          </div>
-        </div>
-        <div class="flex flex-row gap-4">
-          <span class="w-full text-left md:text-right font-bold content-center">Kembalian</span>
-          <div class="w-auto relative rounded-md shadow-sm">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-              <span class="font-bold">Rp</span>
-            </div>
-            <input type="text" name="priceTotalUangKembalian" id="priceTotalUangKembalian" class="tracking-wide block w-full font-bold rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
-          </div>
-        </div>
-        <div class="flex flex-row gap-2 mt-4">
-          <button class="w-full rounded-md border border-gray-500 shadow-md p-2 bg-gray-400 text-black font-bold" onclick="hapusSeluruhDataBelanjaan()">Hapus semua</button>
-          <button class="w-full rounded-md border border-black shadow-md p-2 bg-yellow-400 text-black font-bold">Bayar</button>
-        </div>
+
+      <div class="flex flex-row gap-2 mt-4">
+        <button class="w-full rounded-md border border-gray-500 shadow-md p-2 bg-gray-400 text-black font-bold" onclick="hapusSeluruhDataBelanjaan()">Hapus semua</button>
+        <button class="w-full rounded-md border border-black shadow-md p-2 bg-yellow-400 text-black font-bold" onclick="printToFile(document.getElementById('myDivKeranjang'))">Bayar</button>
       </div>
     </div>
     <!-- Audio -->
@@ -332,7 +339,61 @@
   </script> -->
 
   <!-- Kumpulan Fungsi -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
+    function downloadImage(canvas, filename = "screenshot-belanjaan.png") {
+      const dataURL = canvas.toDataURL("image/png"); // Mengubah canvas menjadi data URL format PNG
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = filename;
+      link.click();
+    }
+
+    function ambilDataTanggal(elementTarget) {
+      const tanggal = new Date();
+
+      // Format tanggal dan waktu
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      };
+      const formatTanggal = tanggal.toLocaleString("id-ID", options);
+
+      // Tambahkan "WIB" di akhir
+      const tanggalWIB = formatTanggal + " WIB";
+
+      return tanggalWIB;
+    }
+
+    function printToFile(div) {
+      dataTanggal = ambilDataTanggal();
+      document.getElementById("tanggalPembelian").textContent = dataTanggal;
+      div.classList.add("p-2");
+      html2canvas(div, {
+        scale: 2, // Tingkatkan resolusi gambar
+        logging: false, // Aktifkan logging untuk melihat pesan debug
+      }).then((canvas) => {
+        // document.body.appendChild(canvas);
+        downloadImage(canvas);
+        div.classList.remove("p-2");
+        document.getElementById("tanggalPembelian").textContent = "";
+
+        // Pesan berhasil
+        Swal.fire({
+          title: "Pembayaran berhasil!",
+          text: "Nota pembayaran sudah disimpan!",
+          icon: "success",
+          customClass: {
+            confirmButton: "bg-blue-500 text-white border border-black font-bold py-2 px-4 rounded shadow-md",
+          },
+        });
+      });
+    }
+
     function dialogAddCustomBarang() {
       Swal.fire({
         title: "Tambahkan Ke Keranjang",
@@ -343,7 +404,7 @@
                   </div>
                   <div class="">
                     <span class="font-bold">Harga Barang</span>
-                    <input id="swal-input-harga-barang" class="swal2-input">
+                    <input id="swal-input-harga-barang" class="swal2-input" placeholder="Rp.." oninput="this.value = formatRibuan(parseFloat(filterAngkaKoma(this.value)))">
                   </div>
                </div>
               `,
@@ -354,12 +415,11 @@
         confirmButtonText: "Beli",
         showCancelButton: true,
         reverseButtons: true,
-        footer: '<span class="text-blue-600">Menambahkan barang yang tidak ditemukan ke keranjang</a>',
+        footer: '<span class="text-blue-600">Menambahkan secara manual barang belanjaan ke keranjang</a>',
       }).then((result) => {
         if (result.isConfirmed) {
           addBarangCustome(document.getElementById("swal-input-nama-barang").value, document.getElementById("swal-input-harga-barang").value);
         }
-        html5QrcodeScanner.resume(); // Resume the scanner
       });
     }
 
@@ -480,7 +540,7 @@
           $("#myTableBelanjaan")
             .DataTable()
             .row.add([
-              `<div class="w-full max-w-sm mx-auto min-w-[160px]">
+              `<div class="w-full max-w-sm text-left min-w-[160px]">
                 ${rowData["nama_produk"]}
                 <span class="font-bold">
                   (Rp ${formatRibuan(rowData["harga"])})
@@ -489,7 +549,7 @@
               `<div class="flex flex-row items-center justify-center w-full max-w-sm mx-auto min-w-[80px]">
                 <input type="number" class="px-3 py-2 border border-gray-300 text-gray-700 rounded-md w-full" value="${rowData["total"]}" onchange="updateJumlahSebuahBarang('${rowData["kode_produk"]}', this.value)">
               </div>`,
-              `<div class="text-right font-bold min-w-[80px]">
+              `<div class="text-right font-bold min-w-[80px] pr-2">
                 Rp ${formatRibuan(parseFloat(filterAngkaKoma(rowData["harga"]) * rowData["total"]))}
               </div>`,
             ])
