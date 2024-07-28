@@ -171,7 +171,7 @@
             <div class="w-full rounded-md shadow-sm mb-4">
               <textarea name="catatanPenjualan" id="catatanPenjualan" class="tracking-wide block w-full font-bold rounded-md border-0 px-4 py-2 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="catatan tambahan jika ada.."></textarea>
             </div>
-            <div class="mt-4">
+            <div class="mt-4 mb-4">
               <span id="tanggalPembelian"></span>
             </div>
           </div>
@@ -395,15 +395,18 @@
 
       dataTanggal = ambilDataTanggal();
       document.getElementById("tanggalPembelian").textContent = dataTanggal;
+
       // tampilkan header nota belanja
       document.getElementById("headerNotaBelanjaan").classList.remove("hidden");
-      document.getElementById("headerNotaBelanjaan").classList.add("block");
 
       // Sembunyikan div pertama dan ketiga
-      rows[0].classList.remove("block"); // Sembunyikan div ke-1
       rows[0].classList.add("!hidden"); // Sembunyikan div ke-1
-      rows[2].querySelector(".dt-end").classList.remove("block"); // Sembunyikan div ke-3
       rows[2].querySelector(".dt-end").classList.add("!hidden"); // Sembunyikan div ke-3
+
+      // Sembunyikan div catatan jika tidak ada value nya
+      if (document.getElementById("catatanPenjualan").value == "") {
+        document.getElementById("catatanPenjualan").classList.add("hidden");
+      }
 
       div.classList.add("p-2");
 
@@ -416,7 +419,6 @@
       html2canvas(div, {
         scale: 2, // Tingkatkan resolusi gambar
         logging: false, // Aktifkan logging untuk melihat pesan debug
-        useCORS: true,
         onclone: function (clonedDoc) {
           // if (div.offsetWidth <= 700) {
           clonedDoc.body.style.width = 850 + "px";
@@ -429,14 +431,14 @@
         document.getElementById("tanggalPembelian").textContent = "";
 
         // sembunyikan header nota belanja
-        document.getElementById("headerNotaBelanjaan").classList.remove("block");
         document.getElementById("headerNotaBelanjaan").classList.add("hidden");
 
         // Sembunyikan div pertama dan ketiga
         rows[0].classList.remove("!hidden"); // Sembunyikan div ke-1
-        rows[0].classList.add("block"); // Sembunyikan div ke-1
         rows[2].querySelector(".dt-end").classList.remove("!hidden"); // Sembunyikan div ke-3
-        rows[2].querySelector(".dt-end").classList.add("block"); // Sembunyikan div ke-3
+
+        // tampilkan div catatan
+        document.getElementById("catatanPenjualan").classList.remove("hidden");
 
         // if (div.offsetWidth <= 700) {
         document.getElementById("myTableBelanjaan").width = ukuranSemula + "px";
@@ -484,13 +486,13 @@
       });
     }
 
-    function hargaTokoCheck(apakah_harga_toko) {
-      if (apakah_harga_toko == "ya") {
-        return "success";
-      } else {
-        return "warning";
-      }
-    }
+    // function hargaTokoCheck(apakah_harga_toko) {
+    //   if (apakah_harga_toko == "ya") {
+    //     return "success";
+    //   } else {
+    //     return "warning";
+    //   }
+    // }
 
     function addBarang(kode_produk) {
       let produk = list_products["products"].find((produk) => produk.kode_produk === kode_produk);
