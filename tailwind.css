@@ -611,6 +611,18 @@ video {
   height: 5rem;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
+.h-4 {
+  height: 1rem;
+}
+
+.h-5 {
+  height: 1.25rem;
+}
+
 .w-auto {
   width: auto;
 }
