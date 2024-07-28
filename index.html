@@ -130,12 +130,8 @@
 
       <!-- bagian yang disimpan menjadi gambar -->
       <div id="myDivKeranjang">
-        <div id="headerNotaBelanjaan" class="hidden mx-auto mt-4 mb-6">
-          <div class="flex flex-row items-center justify-center">
-            <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-[6.4rem]" />
-            <div class="font-bold text-6xl">Barasi</div>
-            <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-[6.4rem] ml-4" />
-          </div>
+        <div id="headerNotaBelanjaan" class="hidden mx-auto mt-2 mb-6">
+          <div class="font-bold text-6xl mb-6">Barasi</div>
           <div class="text-lg mb-2">Frozen Food</div>
           <div class="text-md text-gray-700">Jl. Sidoagung no. 175, Singosari, Malang</div>
         </div>
@@ -274,12 +270,15 @@
           // Define your table columns here
           {
             title: "Nama Produk",
+            width: "60%",
           },
           {
             title: "Jumlah",
+            width: "20%",
           },
           {
             title: "Total",
+            width: "20%",
           },
         ],
         pageLength: 100,
@@ -403,20 +402,20 @@
 
       div.classList.add("p-2");
 
-      if (div.offsetWidth <= 700) {
-        ukuranSemula = document.getElementById("myDivKeranjang").offsetWidth;
-        document.getElementById("myTableBelanjaan").width = "700px";
-        $("#myTableBelanjaan").DataTable().columns.adjust().draw();
-      }
+      // if (div.offsetWidth <= 700) {
+      ukuranSemula = document.getElementById("myDivKeranjang").offsetWidth;
+      document.getElementById("myTableBelanjaan").width = "700px";
+      $("#myTableBelanjaan").DataTable().columns.adjust().draw();
+      // }
 
       html2canvas(div, {
         scale: 2, // Tingkatkan resolusi gambar
         logging: false, // Aktifkan logging untuk melihat pesan debug
         useCORS: true,
         onclone: function (clonedDoc) {
-          if (div.offsetWidth <= 700) {
-            clonedDoc.body.style.width = 850 + "px";
-          }
+          // if (div.offsetWidth <= 700) {
+          clonedDoc.body.style.width = 850 + "px";
+          // }
         },
       }).then((canvas) => {
         // document.body.appendChild(canvas);
@@ -434,10 +433,10 @@
         rows[2].querySelector(".dt-end").classList.remove("!hidden"); // Sembunyikan div ke-3
         rows[2].querySelector(".dt-end").classList.add("block"); // Sembunyikan div ke-3
 
-        if (div.offsetWidth <= 700) {
-          document.getElementById("myTableBelanjaan").width = ukuranSemula + "px";
-          $("#myTableBelanjaan").DataTable().columns.adjust().draw();
-        }
+        // if (div.offsetWidth <= 700) {
+        document.getElementById("myTableBelanjaan").width = ukuranSemula + "px";
+        $("#myTableBelanjaan").DataTable().columns.adjust().draw();
+        // }
 
         // Pesan berhasil
         Swal.fire({
