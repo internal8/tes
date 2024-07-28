@@ -393,8 +393,8 @@
       // Sembunyikan div pertama dan ketiga
       rows[0].classList.remove("block"); // Sembunyikan div ke-1
       rows[0].classList.add("!hidden"); // Sembunyikan div ke-1
-      rows[2].classList.remove("block"); // Sembunyikan div ke-3
-      rows[2].classList.add("!hidden"); // Sembunyikan div ke-3
+      rows[2].querySelector(".dt-end").classList.remove("block"); // Sembunyikan div ke-3
+      rows[2].querySelector(".dt-end").classList.add("!hidden"); // Sembunyikan div ke-3
 
       div.classList.add("p-2");
 
@@ -426,8 +426,8 @@
         // Sembunyikan div pertama dan ketiga
         rows[0].classList.remove("!hidden"); // Sembunyikan div ke-1
         rows[0].classList.add("block"); // Sembunyikan div ke-1
-        rows[2].classList.remove("!hidden"); // Sembunyikan div ke-3
-        rows[2].classList.add("block"); // Sembunyikan div ke-3
+        rows[2].querySelector(".dt-end").classList.remove("!hidden"); // Sembunyikan div ke-3
+        rows[2].querySelector(".dt-end").classList.add("block"); // Sembunyikan div ke-3
 
         if (div.offsetWidth <= 700) {
           document.getElementById("myTableBelanjaan").width = ukuranSemula + "px";
