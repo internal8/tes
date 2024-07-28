@@ -656,6 +656,10 @@ video {
   height: 6.4rem;
 }
 
+.h-\[6rem\] {
+  height: 6rem;
+}
+
 .w-auto {
   width: auto;
 }
@@ -714,6 +718,10 @@ video {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .overflow-x-auto {
