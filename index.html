@@ -373,14 +373,31 @@
       dataTanggal = ambilDataTanggal();
       document.getElementById("tanggalPembelian").textContent = dataTanggal;
       div.classList.add("p-2");
+
+      if (div.offsetWidth <= 700) {
+        ukuranSemula = document.getElementById("myDivKeranjang").offsetWidth;
+        document.getElementById("myTableBelanjaan").width = "700px";
+        $("#myTableBelanjaan").DataTable().columns.adjust().draw();
+      }
+
       html2canvas(div, {
         scale: 2, // Tingkatkan resolusi gambar
         logging: false, // Aktifkan logging untuk melihat pesan debug
+        onclone: function (clonedDoc) {
+          if (div.offsetWidth <= 700) {
+            clonedDoc.body.style.width = 850 + "px";
+          }
+        },
       }).then((canvas) => {
         // document.body.appendChild(canvas);
         downloadImage(canvas);
         div.classList.remove("p-2");
         document.getElementById("tanggalPembelian").textContent = "";
+
+        if (div.offsetWidth <= 700) {
+          document.getElementById("myTableBelanjaan").width = ukuranSemula + "px";
+          $("#myTableBelanjaan").DataTable().columns.adjust().draw();
+        }
 
         // Pesan berhasil
         Swal.fire({
@@ -540,16 +557,16 @@
           $("#myTableBelanjaan")
             .DataTable()
             .row.add([
-              `<div class="w-full max-w-sm text-left min-w-[160px]">
+              `<div class="w-full text-left min-w-[160px] p-2">
                 ${rowData["nama_produk"]}
                 <span class="font-bold">
                   (Rp ${formatRibuan(rowData["harga"])})
                 </span>
               </div>`,
-              `<div class="flex flex-row items-center justify-center w-full max-w-sm mx-auto min-w-[80px]">
-                <input type="number" class="px-3 py-2 border border-gray-300 text-gray-700 rounded-md w-full" value="${rowData["total"]}" onchange="updateJumlahSebuahBarang('${rowData["kode_produk"]}', this.value)">
+              `<div class="w-full min-w-[80px]">
+                <input type="number" class="p-2 border border-gray-300 rounded-md w-full text-center" value="${rowData["total"]}" onchange="updateJumlahSebuahBarang('${rowData["kode_produk"]}', this.value)">
               </div>`,
-              `<div class="text-right font-bold min-w-[80px] pr-2">
+              `<div class="text-left font-bold min-w-[80px] p-2">
                 Rp ${formatRibuan(parseFloat(filterAngkaKoma(rowData["harga"]) * rowData["total"]))}
               </div>`,
             ])
