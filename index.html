@@ -298,12 +298,15 @@
 
   <!-- Kumpulan Fungsi Download Nota -->
   <script>
-    function downloadImage(canvas, filename = "screenshot-belanjaan.png") {
-      const dataURL = canvas.toDataURL("image/png"); // Mengubah canvas menjadi data URL format PNG
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = filename;
-      link.click();
+    function downloadImage(canvas, filename = "screenshot-belanjaan.jpg") {
+      canvas.toBlob(function (blob) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(url); // Membebaskan memori setelah digunakan
+      }, "image/jpeg");
     }
 
     function ambilDataTanggal(elementTarget) {
