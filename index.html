@@ -138,7 +138,7 @@
         <!-- bagian yang disimpan menjadi gambar -->
         <div id="myDivKeranjang">
           <div id="headerNotaBelanjaan" class="hidden mx-auto mt-2 mb-6">
-            <div class="font-bold text-6xl mb-4">Barasi</div>
+            <div class="font-bold text-6xl mb-4 tracking-wide">Barasi</div>
             <div class="text-lg mb-2">Frozen Food</div>
             <div class="text-md text-gray-700">Jl. Sidoagung no. 175, Singosari, Malang</div>
           </div>
@@ -192,7 +192,7 @@
       </div>
     </div>
 
-    <div id="scrollDiv" class="fixed bottom-0 bg-red-800 text-white py-4 w-full flex gap-2 items-center justify-center text-lg">
+    <div id="scrollDiv" class="cursor-pointer fixed bottom-0 bg-red-800 text-white py-4 w-full flex gap-2 items-center justify-center text-lg">
       <div>
         <svg class="stroke-white" width="2.1rem" height="2.1rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -315,8 +315,16 @@
             title: "Total",
             width: "20%",
           },
+          {
+            title: "Tanggal",
+          },
         ],
         pageLength: 100,
+        order: [[3, "asc"]], // Default sorting based on the second column (Tanggal)
+        columnDefs: [
+          { targets: 3, visible: false }, // Hide the Tanggal column
+        ],
+        ordering: false,
         // scrollX: true,
       });
       tampilkanDataKeranjang();
@@ -529,6 +537,7 @@
           nama_produk: nama_produk,
           harga: harga,
           total: parseFloat(filterAngkaKoma(jumlah.toString())),
+          waktu: formatDate(),
         };
         dataArray.push(data);
         localStorage.setItem("dataBarang", JSON.stringify(dataArray));
@@ -545,6 +554,7 @@
           nama_produk: produk.nama_produk,
           harga: produk.harga,
           total: parseFloat(filterAngkaKoma(jumlah.toString())),
+          waktu: formatDate(),
         };
         dataArray.push(data);
         localStorage.setItem("dataBarang", JSON.stringify(dataArray));
@@ -595,6 +605,9 @@
               </div>`,
               `<div class="text-left font-bold min-w-[80px] p-2">
                 Rp ${formatRibuan(parseFloat(filterAngkaKoma(rowData["harga"]) * rowData["total"]))}
+              </div>`,
+              `<div class="text-left font-bold min-w-[80px] p-2">
+                ${rowData["tanggal"]}
               </div>`,
             ])
             .draw();
@@ -651,6 +664,22 @@
 
     function formatRibuan(angka) {
       return angka.toString().replace(/(\d)(?=(\d{3})+$)/g, "$1."); // Tambahkan koma setiap 3 digit
+    }
+
+    function formatDate() {
+      let date = new Date();
+      // Ambil komponen tanggal
+      let year = date.getFullYear();
+      let month = String(date.getMonth() + 1).padStart(2, "0"); // Bulan dimulai dari 0
+      let day = String(date.getDate()).padStart(2, "0");
+
+      // Ambil komponen waktu
+      let hours = String(date.getHours()).padStart(2, "0");
+      let minutes = String(date.getMinutes()).padStart(2, "0");
+      let seconds = String(date.getSeconds()).padStart(2, "0");
+
+      // Gabungkan semuanya menjadi format yang diinginkan
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
   </script>
 
