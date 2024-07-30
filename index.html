@@ -9,7 +9,6 @@
         font-family: "Inter", sans-serif;
         text-align: center;
         margin: 0;
-        padding: 10px;
         background-color: #f8f8f8;
       }
       #reader {
@@ -101,87 +100,106 @@
   </head>
 
   <body>
-    <div class="mx-auto my-4 p-3 border border-gray-400 bg-white rounded-md shadow-md">
-      <div class="flex flex-row items-center justify-center overflow-hidden">
-        <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-[6rem]" />
-        <div class="font-bold text-5xl">Barasi</div>
-        <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-[6rem] ml-4" />
+    <!-- Header -->
+    <div class="p-2">
+      <div class="mx-auto my-4 p-8 border border-gray-400 bg-white rounded-md shadow-md">
+        <div class="flex flex-row items-center justify-center overflow-hidden">
+          <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-[6rem]" />
+          <div class="font-bold text-5xl">Barasi</div>
+          <img src="https://sweetalert2.github.io/images/nyan-cat.gif" alt="Nyan Cat" class="h-[6rem] ml-4" />
+        </div>
+        <div>Frozen Food</div>
       </div>
-      <div>Frozen Food</div>
     </div>
     <!-- Konten scanner -->
     <!-- <div id="reader"></div> -->
     <!-- Konten table barang -->
-    <div class="mx-auto overflow-x-auto my-4 p-8 border border-gray-400 bg-white rounded-md shadow-md">
-      <span class="text-2xl font-bold">Data Barang</span>
-      <div class="pt-6">
-        <table id="myTable" class="display strip hover cell-border responsive text-left"></table>
+
+    <div class="p-2">
+      <div class="mx-auto overflow-x-auto my-4 p-8 border border-gray-400 bg-white rounded-md shadow-md">
+        <span class="text-2xl font-bold">Data Barang</span>
+        <div class="pt-6">
+          <table id="myTable" class="display strip hover cell-border responsive text-left"></table>
+        </div>
       </div>
     </div>
-    <!-- Konten table belanjaan -->
-    <div class="mx-auto my-4 p-8 border-4 border-yellow-500 rounded-md shadow-md bg-white">
-      <div class="flex flex-col gap-4 md:flex-row mb-2">
-        <span class="flex-1 hidden md:block"></span>
-        <span class="flex-1 text-2xl font-bold">🛒 Keranjang 🛒</span>
-        <div class="flex-1 md:text-right">
-          <span class="flex-1 bg-blue-500 cursor-pointer text-white font-bold py-2 px-4 rounded border border-black shadow-md" onclick="dialogAddCustomBarang()">+ Barang manual</span>
-        </div>
-      </div>
 
-      <!-- bagian yang disimpan menjadi gambar -->
-      <div id="myDivKeranjang">
-        <div id="headerNotaBelanjaan" class="hidden mx-auto mt-2 mb-6">
-          <div class="font-bold text-6xl mb-4">Barasi</div>
-          <div class="text-lg mb-2">Frozen Food</div>
-          <div class="text-md text-gray-700">Jl. Sidoagung no. 175, Singosari, Malang</div>
+    <!-- Konten table belanjaan -->
+    <div id="kontenBelanjaan" class="p-2 mb-20">
+      <div class="mx-auto my-4 p-8 border-4 border-yellow-500 rounded-md shadow-md bg-white">
+        <div class="flex flex-col gap-4 md:flex-row mb-2">
+          <span class="flex-1 hidden md:block"></span>
+          <span class="flex-1 text-2xl font-bold">🛒 Keranjang 🛒</span>
+          <div class="flex-1 md:text-right">
+            <span class="flex-1 bg-blue-500 cursor-pointer text-white font-bold py-2 px-4 rounded border border-black shadow-md" onclick="dialogAddCustomBarang()">+ Barang manual</span>
+          </div>
         </div>
-        <div class="pt-6 overflow-x-auto">
-          <table id="myTableBelanjaan" class="display strip hover cell-border responsive text-left"></table>
-        </div>
-        <!-- perhitungan belanjaan -->
-        <div class="mt-10 flex flex-col gap-2">
-          <div class="flex flex-col gap-2">
-            <div class="flex flex-row gap-4">
-              <span class="w-full text-right font-bold content-center">Total Belanjaan</span>
-              <div class="w-auto relative rounded-md shadow-sm">
-                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span class="font-bold">Rp</span>
+
+        <!-- bagian yang disimpan menjadi gambar -->
+        <div id="myDivKeranjang">
+          <div id="headerNotaBelanjaan" class="hidden mx-auto mt-2 mb-6">
+            <div class="font-bold text-6xl mb-4">Barasi</div>
+            <div class="text-lg mb-2">Frozen Food</div>
+            <div class="text-md text-gray-700">Jl. Sidoagung no. 175, Singosari, Malang</div>
+          </div>
+          <div class="pt-6 overflow-x-auto">
+            <table id="myTableBelanjaan" class="display strip hover cell-border responsive text-left"></table>
+          </div>
+          <!-- perhitungan belanjaan -->
+          <div class="mt-10 flex flex-col gap-2">
+            <div class="flex flex-col gap-2">
+              <div class="flex flex-row gap-4">
+                <span class="w-full text-right font-bold content-center">Total Belanjaan</span>
+                <div class="w-auto relative rounded-md shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <span class="font-bold">Rp</span>
+                  </div>
+                  <input type="text" name="priceTotalHargaBelanjaan" id="priceTotalHargaBelanjaan" class="tracking-wide bg-gray-200 block w-full font-bold rounded-md border-0 py-3 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
                 </div>
-                <input type="text" name="priceTotalHargaBelanjaan" id="priceTotalHargaBelanjaan" class="tracking-wide bg-gray-200 block w-full font-bold rounded-md border-0 py-3 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
               </div>
-            </div>
-            <div class="flex flex-row gap-4">
-              <span class="w-full text-right font-bold content-center">Uang</span>
-              <div class="w-auto relative rounded-md shadow-sm">
-                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span class="font-bold">Rp</span>
+              <div class="flex flex-row gap-4">
+                <span class="w-full text-right font-bold content-center">Uang</span>
+                <div class="w-auto relative rounded-md shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <span class="font-bold">Rp</span>
+                  </div>
+                  <input type="number" name="priceTotalUangPembayaran" id="priceTotalUangPembayaran" class="tracking-wide block w-full font-bold rounded-md border-0 py-3 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" min="0" oninput="updateKembalian()" />
                 </div>
-                <input type="number" name="priceTotalUangPembayaran" id="priceTotalUangPembayaran" class="tracking-wide block w-full font-bold rounded-md border-0 py-3 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" min="0" oninput="updateKembalian()" />
               </div>
-            </div>
-            <div class="flex flex-row gap-4">
-              <span class="w-full text-right font-bold content-center">Kembalian</span>
-              <div class="w-auto relative rounded-md shadow-sm">
-                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span class="font-bold">Rp</span>
+              <div class="flex flex-row gap-4">
+                <span class="w-full text-right font-bold content-center">Kembalian</span>
+                <div class="w-auto relative rounded-md shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <span class="font-bold">Rp</span>
+                  </div>
+                  <input type="text" name="priceTotalUangKembalian" id="priceTotalUangKembalian" class="tracking-wide bg-gray-200 block w-full font-bold rounded-md border-0 py-3 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
                 </div>
-                <input type="text" name="priceTotalUangKembalian" id="priceTotalUangKembalian" class="tracking-wide bg-gray-200 block w-full font-bold rounded-md border-0 py-3 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0" readonly />
               </div>
-            </div>
-            <div class="w-full rounded-md shadow-sm mb-4">
-              <textarea name="catatanPenjualan" id="catatanPenjualan" class="tracking-wide block w-full font-bold rounded-md border-0 px-4 py-2 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" rows="5" placeholder="catatan tambahan kalau ada.."></textarea>
-            </div>
-            <div class="mt-4 mb-4">
-              <span id="tanggalPembelian"></span>
+              <div class="w-full rounded-md shadow-sm mb-4">
+                <textarea name="catatanPenjualan" id="catatanPenjualan" class="tracking-wide block w-full font-bold rounded-md border-0 px-4 py-2 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" rows="5" placeholder="catatan tambahan kalau ada.."></textarea>
+              </div>
+              <div class="mt-4 mb-4">
+                <span id="tanggalPembelian"></span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="flex flex-row gap-2 mt-4">
-        <button class="w-full rounded-md border border-gray-500 shadow-md p-2 bg-gray-400 text-black font-bold" onclick="hapusSeluruhDataBelanjaan()">Hapus semua</button>
-        <button class="w-full rounded-md border border-black shadow-md p-2 bg-yellow-400 text-black font-bold" onclick="printToFile(document.getElementById('myDivKeranjang'))">Bayar</button>
+        <div class="flex flex-row gap-2 mt-4">
+          <button class="w-full rounded-md border border-gray-500 shadow-md p-2 bg-gray-400 text-black font-bold" onclick="hapusSeluruhDataBelanjaan()">Hapus semua</button>
+          <button class="w-full rounded-md border border-black shadow-md p-2 bg-yellow-400 text-black font-bold" onclick="printToFile(document.getElementById('myDivKeranjang'))">Bayar</button>
+        </div>
       </div>
+    </div>
+
+    <div id="scrollDiv" class="fixed bottom-0 bg-red-800 text-white py-4 w-full flex gap-2 items-center justify-center text-lg">
+      <div>
+        <svg class="stroke-white" width="2.1rem" height="2.1rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <span id="quickInfoJumlahBarang" class="font-bold tracking-wide">0 items</span>
+      <span id="quickInfoTotalHarga" class="font-bold tracking-wide"></span>
     </div>
     <!-- Audio -->
     <!-- <audio id="scanSound" src="store-scanner-beep-90395.mp3" class="hidden"></audio> -->
@@ -195,6 +213,15 @@
 
   <!-- Qr Code Scanner -->
   <!-- <script src="html5-qrcode.min.js"></script> -->
+
+  <!-- scroll to kontenBelanjaan -->
+  <script>
+    document.getElementById("scrollDiv").addEventListener("click", function () {
+      document.getElementById("kontenBelanjaan").scrollIntoView({
+        behavior: "smooth",
+      });
+    });
+  </script>
 
   <!-- memuat data produk -->
   <script>
@@ -526,6 +553,25 @@
       }
     }
 
+    function tampilkanDataQuickInfo() {
+      try {
+        const dataArray = JSON.parse(localStorage.getItem("dataBarang"));
+        let jumlahBarang = 0;
+        let totalHarga = 0;
+
+        for (const item of dataArray) {
+          jumlahBarang += item.total;
+          totalHarga += parseFloat(filterAngkaKoma(item.harga)) * parseFloat(filterAngkaKoma(item.total)); // Assuming your dataArray contains objects with a 'total' property
+        }
+
+        document.getElementById("quickInfoJumlahBarang").textContent = jumlahBarang + " items";
+        document.getElementById("quickInfoTotalHarga").textContent = "(Rp " + formatRibuan(totalHarga) + ")";
+      } catch (error) {
+        document.getElementById("quickInfoJumlahBarang").textContent = "0 items";
+        document.getElementById("quickInfoTotalHarga").textContent = "";
+      }
+    }
+
     // Tampilkan data localStorage ke datatables
     function tampilkanDataKeranjang() {
       try {
@@ -553,6 +599,7 @@
             ])
             .draw();
         });
+        tampilkanDataQuickInfo();
         updateTotalBelanjaan();
       } catch (error) {}
     }
