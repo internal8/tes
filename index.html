@@ -380,7 +380,7 @@
 
       // Sembunyikan div pertama dan ketiga
       rows[0].classList.add("!hidden"); // Sembunyikan div ke-1
-      rows[2].querySelector(".dt-end").classList.add("!hidden"); // Sembunyikan div ke-3
+      document.getElementById("myDivKeranjang").querySelector(".dt-length").classList.add("!hidden"); // Sembunyikan div ke-3
 
       // Sembunyikan div catatan jika tidak ada value nya
       if (document.getElementById("catatanPenjualan").value == "") {
@@ -414,7 +414,7 @@
 
         // Sembunyikan div pertama dan ketiga
         rows[0].classList.remove("!hidden"); // Sembunyikan div ke-1
-        rows[2].querySelector(".dt-end").classList.remove("!hidden"); // Sembunyikan div ke-3
+        document.getElementById("myDivKeranjang").querySelector(".dt-length").classList.remove("!hidden"); // Sembunyikan div ke-3
 
         // tampilkan div catatan
         document.getElementById("catatanPenjualan").classList.remove("hidden");
